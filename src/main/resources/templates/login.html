@@ -14,6 +14,15 @@
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <!-- Tabs Titles -->
+            <div th:if="${error} == 'empty'"
+                 class="alert alert-danger alert-dismissable text-left">
+                공백은 허용되지 않습니다.
+            </div>
+
+            <div th:if="${error} == 'exist'"
+                 class="alert alert-danger alert-dismissable text-left">
+                이미 접속한 유저입니다.
+            </div>
 
             <!-- Icon -->
             <div class="fadeIn first">
