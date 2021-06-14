@@ -1,6 +1,5 @@
 
 /* BASIC */
-
 html {
     background-color: #56baed;
 }
@@ -225,6 +224,7 @@ input[type=text]:placeholder {
 }
 
 .fadeIn.fourth {
+    margin: 30px;
     -webkit-animation-delay: 1s;
     -moz-animation-delay: 1s;
     animation-delay: 1s;
