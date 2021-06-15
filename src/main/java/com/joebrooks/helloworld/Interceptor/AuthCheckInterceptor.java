@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,20 +15,30 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthCheckInterceptor implements HandlerInterceptor {
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Value("${jwt.header}")
-    private String headerName;
+    @Value("${jwt.cookie.name}")
+    private String cookieName;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception{
 
-        String token = request.getHeader(headerName);
+        Cookie[] cookies = request.getCookies();
 
-        if(token == null || !jwtTokenProvider.isValidate(token)){
-            response.sendRedirect("/error/noAuth");
-            return false;
+        if(cookies != null){
+            for(var i : cookies){
+                if(i.getName().equals(cookieName)){
+                    if(jwtTokenProvider.isValidate(i.getValue())){
+                        return true;
+                    } else{
+                        break;
+                    }
+
+                }
+            }
+
         }
 
-        return true;
+        response.sendRedirect("/login");
+        return false;
     }
 }
