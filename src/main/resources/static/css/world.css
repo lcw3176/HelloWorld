@@ -2,27 +2,61 @@ body{
     margin: 0px;
 }
 
-/*.ground{*/
-/*    position: fixed;*/
-/*    bottom: 0;*/
-/*    height: 20%;*/
-/*    width: 100%;*/
-/*    background-color: black;*/
-/*}*/
-
-.field{
+.ground{
     position: fixed;
+    bottom: 0;
+    height: 20%;
     width: 100%;
-    height: 100%;
-    background-image: url("/img/background.png");
-    background-size: 1550px;
-    background-attachment: fixed;
+    background-color: black;
 }
+
+.chat{
+    position: fixed;
+    bottom: 30px;
+    left: 600px;
+}
+
+.chat.input{
+    padding: 10px;
+}
+
+.chat.send{
+
+}
+
+/*.field{*/
+/*    position: fixed;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background-image: url("/img/background.png");*/
+/*    background-size: 1550px;*/
+/*    background-repeat: no-repeat;*/
+/*    background-attachment: fixed;*/
+/*}*/
 
 .character{
     width: 65px;
     left: 0px;
-    top: 84%;
+    top: 72%;
     height: 65px;
-    position: absolute;
+    position: fixed;
+}
+
+.nameTag{
+    width: 65px;
+    left: 0px;
+    top: 63%;
+    height: 65px;
+    position: fixed;
+}
+
+.conversation{
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    width: 100px;
+    left: 0px;
+    top: 53%;
+    height: 65px;
+    position: fixed;
 }
