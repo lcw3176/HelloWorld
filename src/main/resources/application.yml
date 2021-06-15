@@ -4,4 +4,5 @@ spring:
 
 jwt:
   secretKey: HelloOpenWorld
-  header: world-token
+  cookie:
+    name: world-token
