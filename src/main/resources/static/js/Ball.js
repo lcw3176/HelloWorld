@@ -28,8 +28,26 @@ export class Ball{
 
         let nameTag = document.getElementById(this.id + "tag");
         nameTag.style.left = position + "px";
+
+    }
+
+
+    setChat(text){
+        let position = document.getElementById(this.id).style.left;
+
+        let conversation = document.createElement("span");
+        conversation.setAttribute("class", "conversation");
+        conversation.innerText = text;
+        conversation.style.left = position;
+
+        console.log(position);
+        let parent = document.getElementById("field");
+
+        parent.appendChild(conversation);
+
+        setTimeout(function (){
+            conversation.remove();
+        }, 2000);
     }
 
 }
-
-// <img th:src="@{/img/ball1.png}" id="chochyumsan" className="character">
