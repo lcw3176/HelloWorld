@@ -18,6 +18,8 @@ public class JwtTokenProvider {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
+    private final long TOKEN_VALID_TIME = 60 * 60 * 3 * 1000L;   // 3시간
+    
     @PostConstruct
     protected void init(){
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -25,12 +27,25 @@ public class JwtTokenProvider {
 
     public String createToken(String nickName){
         Date now = new Date();
+        Date expiration = new Date(now.getTime() + TOKEN_VALID_TIME);
 
         return Jwts.builder()
                 .claim("nickName", nickName)
                 .setIssuedAt(now)
+                .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+    }
+
+    public String getNicknameFromClaims(String token){
+        Claims claims = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+
+        Map<String, Object> map = (Map<String, Object>) claims;
+
+        return  map.get("nickName").toString();
     }
 
 
