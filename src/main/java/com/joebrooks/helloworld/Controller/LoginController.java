@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
@@ -19,31 +18,31 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/login")
 public class LoginController {
 
-    @Value("${jwt.header}")
-    private String headerName;
+    @Value("${jwt.cookie.name}")
+    private String cookieName;
 
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public String showForm(Model model, User user){
-        return "index";
+    public String showForm(User user){
+        return "login";
     }
 
 
     @PostMapping
     public String userLogin(HttpServletResponse res, Model model, User user){
-        if(user.getNickName() == null || user.getNickName().equals("")){
-            return "redirect:login";
-        }
-        String token = jwtTokenProvider.createToken(user.getNickName());
 
-        System.out.println(token);
-        Cookie jwtCookie = new Cookie(headerName, token);
+        if(user.getNickName() == null || user.getNickName().equals("")){
+            model.addAttribute("error", "empty");
+            return "login";
+        }
+
+        Cookie jwtCookie = new Cookie(cookieName, jwtTokenProvider.createToken(user.getNickName()));
         jwtCookie.setMaxAge(60*60*3);
 
         res.addCookie(jwtCookie);
 
-        return "world";
+        return "redirect:/auth/world";
     }
 
 }
