@@ -43,20 +43,23 @@ body{
 }
 
 .nameTag{
-    width: 65px;
+    width: auto;
     left: 0px;
-    top: 63%;
+    top: 67%;
     height: 65px;
     position: fixed;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .conversation{
     border: 2px solid black;
     border-radius: 20px;
     padding: 10px;
-    width: 100px;
+    width: 150px;
     left: 0px;
     top: 53%;
-    height: 65px;
+    height: auto;
+    overflow: hidden;
     position: fixed;
 }
