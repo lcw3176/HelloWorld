@@ -13,6 +13,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 @Component
 @RequiredArgsConstructor
@@ -22,12 +23,15 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
+        Iterator<WebSocketSession> iter = sessionMap.values().iterator();
 
-        for(var i : sessionMap.values()){
-            if(i != null && i.isOpen()){
-                synchronized (i){
-                    i.sendMessage(message);
+        while(iter.hasNext()){
+            WebSocketSession sess = iter.next();
+            synchronized (sess){
+                if(sess.isOpen()){
+                    sess.sendMessage(message);
                 }
+
             }
         }
     }
