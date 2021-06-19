@@ -54,6 +54,7 @@ window.onload = function (){
                 if(!Object.keys(others).includes(data.id) && myId !== data.id){
                     others[data.id] = new Ball(data.id, data.content.x, data.content.y);
                 }
+                break;
 
             default:
                 break;
