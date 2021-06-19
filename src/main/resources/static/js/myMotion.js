@@ -1,8 +1,7 @@
-export class Motion {
+export class MyMotion {
 
     constructor(id, socketService) {
         this.id = id;
-        this.target = document.getElementById(this.id);
         this.socketService = socketService;
         this.timeOut = 30;  // setInterval 시간
 
@@ -15,7 +14,7 @@ export class Motion {
         //
         
         // x축 움직임 관련 변수
-        this.maxSpeed = 20;
+        this.maxSpeed = 15;
         this.velocityPlusValue = 1;
         this.xPosition = 0;
         this.nowVelocity = 0;
@@ -25,10 +24,14 @@ export class Motion {
         this.moveId = null;
         //
 
-        // ui draw 관련 변수
-        this.characterTopRate = 90;
-        this.nameTagTopRate = 85;
-        this.conversationTopRate = 75;
+        // 충돌 관련 변수
+        this.pushVelocity = 20;
+        this.left = "left";
+        this.right = "right";
+        this.collsionDirection = null;
+        //
+
+        // draw 관련 변수
         this.endOfWindow = 1580;
         this.startOfWindow = -100;
         //
@@ -40,16 +43,42 @@ export class Motion {
 
             this.moveId = setInterval(this.xMoveProcess.bind(this), this.timeOut)
         }
-
-
     }
-
 
     moveRight(){
         if(this.moveId == null){
             this.isGoingFront = true;
 
             this.moveId = setInterval(this.xMoveProcess.bind(this), this.timeOut)
+        }
+    }
+
+    collision(othersPosition){
+
+        if(this.xPosition - othersPosition <=  65 && this.xPosition - othersPosition >  0){
+            this.collsionDirection = this.right;
+
+            if(this.moveId == null){
+                this.nowVelocity = this.pushVelocity;
+                this.moveLeft();
+            } else{
+                this.isGoingFront = true;
+            }
+
+            this.stopMove();
+        }
+
+        if(this.xPosition - othersPosition >=  -65 && this.xPosition - othersPosition <= 0){
+            this.collsionDirection = this.left;
+
+            if(this.moveId == null){
+                this.nowVelocity = this.pushVelocity;
+                this.moveRight();
+            } else{
+                this.isGoingFront = false;
+            }
+
+            this.stopMove();
         }
     }
 
@@ -75,7 +104,6 @@ export class Motion {
         if(!this.isStopping){
             this.isStopping = true;
         }
-
     }
 
 
@@ -124,23 +152,11 @@ export class Motion {
             this.xPosition -= this.nowVelocity;
         }
 
-        this.target.style.transform = "rotate(" + this.xPosition * 5 + "deg)"
-        this.target.style.top = this.characterTopRate - this.yPosition + "%";
-        this.target.style.left = this.xPosition + "px";
+        this.socketService.sendData(2, {x:this.xPosition, y:this.yPosition, collision:this.collsionDirection}, this.id);
 
-        let nameTag = document.getElementById(this.id + "tag");
-        nameTag.style.left = this.xPosition + "px";
-        nameTag.style.top = this.nameTagTopRate - this.yPosition + "%";
-
-        let conversation = document.getElementById(this.id + "conversation");
-
-        if(conversation !== null){
-            conversation.style.left = this.xPosition + "px";
-            conversation.style.top = this.conversationTopRate - this.yPosition + "%";
-        }
-
-        this.socketService.sendData(2, {x:this.xPosition, y:this.yPosition}, this.id);
+        this.collsionDirection = null;
     }
+
 
 }
 
