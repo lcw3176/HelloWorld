@@ -1,53 +1,125 @@
-export class Ball{
-    constructor(id) {
+export class Ball {
+    constructor(id, xPosition, yPosition) {
         this.id = id;
-        this.Born();
+        this.characterTopRate = 90;
+        this.nameTagTopRate = 85;
+        this.conversationTopRate = 75;
+        this.characterWidth = 65;
+        this.halfOfeffectSize = 350;
+        this.hpElement = null;
+        this.nameElement = null;
+        this.imgElement = null;
+        this.conversationElement = null;
+        this.born(xPosition, yPosition);
     }
 
-    Born(){
-        let childName = document.createElement("p");
-        childName.setAttribute("class", "nameTag");
-        childName.setAttribute("id", this.id + "tag");
-        childName.innerText = this.id;
+    born(xPosition, yPosition){
+        this.hpElement = document.createElement("progress");
+        this.hpElement.setAttribute("class", "hp");
+        this.hpElement.setAttribute("id", this.id + "hp");
+        this.hpElement.value = 100;
+        this.hpElement.max = 100;
+        this.hpElement.style.left = xPosition - 16 + "px";
 
-        let child = document.createElement("img");
-        child.setAttribute("id", this.id);
-        child.setAttribute("class", "character");
-        child.src = "../img/ball1.png";
+        this.nameElement = document.createElement("p");
+        this.nameElement.setAttribute("class", "nameTag");
+        this.nameElement.setAttribute("id", this.id + "tag");
+        this.nameElement.innerText = this.id;
+        this.nameElement.style.left = xPosition + "px";
+        this.nameElement.style.top = this.nameTagTopRate - yPosition + "%";
+
+        this.imgElement = document.createElement("img");
+        this.imgElement.setAttribute("id", this.id);
+        this.imgElement.setAttribute("class", "character");
+        this.imgElement.src = "../img/ball1.png";
+        this.imgElement.style.left = xPosition + "px";
+        this.imgElement.style.top = this.characterTopRate - yPosition + "%";
+
         let parent = document.getElementById("field");
 
-        parent.appendChild(childName);
-        parent.appendChild(child);
+        parent.appendChild(this.hpElement);
+        parent.appendChild(this.nameElement);
+        parent.appendChild(this.imgElement);
     }
 
-    setPosition(position){
+    delete(){
+        this.nameElement.remove();
+        this.imgElement.remove();
+        this.hpElement.remove();
+        let checkExist = document.getElementById(this.id + "conversation");
+        if(checkExist !== null){
+            checkExist.remove();
+        }
 
-        let character = document.getElementById(this.id);
-        character.style.transform = "rotate(" + position + "deg)"
-        character.style.left = position + "px";
+    }
 
-        let nameTag = document.getElementById(this.id + "tag");
-        nameTag.style.left = position + "px";
+    setPosition(xPosition, yPosition, collision){
+        this.hpElement.style.left = xPosition + "px";
+        this.hpElement.style.left = xPosition - 16 + "px";
+
+        this.imgElement.style.transform = "rotate(" + xPosition + "deg)"
+        this.imgElement.style.left = xPosition + "px";
+        this.imgElement.style.top = this.characterTopRate - yPosition + "%";
+
+        this.nameElement.style.left = xPosition + "px";
+        this.nameElement.style.top = this.nameTagTopRate - yPosition + "%";
+
+        if(this.conversationElement !== null){
+            this.conversationElement.style.left = xPosition + "px";
+            this.conversationElement.style.top = this.conversationTopRate - yPosition + "%";
+        }
+
+        if(collision !== null){
+            this.hpElement.value -= 5;
+
+            let effect = document.createElement("img");
+            effect.setAttribute("class", "collision");
+            effect.src ="/img/collision.gif";
+
+            if(collision === "left"){
+                effect.style.left = xPosition - this.halfOfeffectSize + "px";
+            }
+
+            if(collision === "right"){
+                effect.style.left = this.characterWidth + xPosition - this.halfOfeffectSize + "px";
+            }
+
+            let parent = document.getElementById("field");
+            parent.appendChild(effect);
+
+            setTimeout(function (){
+                effect.remove();
+            }, 500);
+
+        }
+
 
     }
 
 
     setChat(text){
+        if(this.conversationElement !== null){
+            this.conversationElement.remove();
+        }
+
         let position = document.getElementById(this.id).style.left;
 
-        let conversation = document.createElement("span");
-        conversation.setAttribute("class", "conversation");
-        conversation.innerText = text;
-        conversation.style.left = position;
+        this.conversationElement = document.createElement("span");
+        this.conversationElement.setAttribute("class", "conversation");
+        this.conversationElement.setAttribute("id", this.id + "conversation");
 
-        console.log(position);
+        this.conversationElement.innerText = text;
+        this.conversationElement.style.left = position;
+
         let parent = document.getElementById("field");
 
-        parent.appendChild(conversation);
+        parent.appendChild(this.conversationElement);
 
         setTimeout(function (){
-            conversation.remove();
+            this.conversationElement.remove();
+            this.conversationElement = null;
         }, 2000);
     }
+
 
 }
