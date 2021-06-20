@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <link th:href="@{/css/world.css}" rel="stylesheet" type="text/css">
+        <script th:type="module" th:src="@{/js/app.js}"></script>
+        <title>HelloWorld</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-</body>
+        <!------ Include the above in your HEAD tag ---------->
+    </head>
+    <body>
+        <div class="field" id="field">
+
+        </div>
+        <div class="ground">
+
+        </div>
+
+        <div class="row justify-content-center" style="margin: 20px">
+            <div class="col-12 col-md-10 col-lg-8">
+                <div class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col" >
+                            <input class="form-control form-control-lg form-control-borderless" id="chat">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" id="sendButton">입력</button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </div>
+            </div>
+            <!--end of col-->
+        </div>
+
+    </body>
+
 </html>
