@@ -29,6 +29,7 @@ export class MyMotion {
         this.left = "left";
         this.right = "right";
         this.collsionDirection = null;
+        this.collisionStandard = 65;
         //
 
         // draw 관련 변수
@@ -54,8 +55,9 @@ export class MyMotion {
     }
 
     collision(othersPosition){
+        let difference = this.xPosition - othersPosition;
 
-        if(this.xPosition - othersPosition <=  65 && this.xPosition - othersPosition >  0){
+        if(difference <=  this.collisionStandard && difference >  0){
             this.collsionDirection = this.right;
 
             if(this.moveId == null){
@@ -68,7 +70,7 @@ export class MyMotion {
             this.stopMove();
         }
 
-        if(this.xPosition - othersPosition >=  -65 && this.xPosition - othersPosition <= 0){
+        if(difference >=  -this.collisionStandard && difference <= 0){
             this.collsionDirection = this.left;
 
             if(this.moveId == null){
