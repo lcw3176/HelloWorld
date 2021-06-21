@@ -1,8 +1,10 @@
 package com.joebrooks.helloworld.Common;
 
 public enum ChatCommand{
-    IAmBorn,
-    YouAreBorn,
+    userBorn,
+    alertExistUserToNewUser,
     Move,
-    Stop,
+    Close,
+    Chat,
+
 }
