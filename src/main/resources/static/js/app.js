@@ -14,16 +14,23 @@ window.onload = function (){
 
     webSocket.onmessage = function (e){
         let data = JSON.parse(e.data);
-        // 0: IAmBorn, 1: YouAreBorn, 2: Move, 3: Close, 4: Chat, 5: AlertPosition,
+        // 0: userBorn, 1: alertExistUserToNewUser, 2: Move, 3: Close, 4: Chat
         switch (data.command){
             case 0:
-                myId = data.id;
-                myBall = new MyBall(myId, socketService);
+                if(myId === undefined){
+                    myId = data.id;
+                    myBall = new MyBall(myId, socketService);
+                } else {
+                    others[data.id] = new Ball(data.id, 0, 0, 100);
+                    socketService.sendData(1, {x:myBall.motion.xPosition, y:myBall.motion.yPosition, hp:myBall.ball.remainingHp}, myId);
+                }
+
                 break;
 
             case 1:
-                others[data.id] = new Ball(data.id, data.content.x, data.content.y);
-                socketService.sendData(5, {x:myBall.motion.xPosition, y:myBall.motion.yPosition}, myId);
+                if(!Object.keys(others).includes(data.id) && myId !== data.id){
+                    others[data.id] = new Ball(data.id, data.content.x, data.content.y, data.content.hp);
+                }
                 break;
 
             case 2:
@@ -47,12 +54,6 @@ window.onload = function (){
                     others[data.id].setChat(data.content);
                 } else{
                     myBall.ball.setChat(data.content);
-                }
-                break;
-
-            case 5:
-                if(!Object.keys(others).includes(data.id) && myId !== data.id){
-                    others[data.id] = new Ball(data.id, data.content.x, data.content.y);
                 }
                 break;
 
