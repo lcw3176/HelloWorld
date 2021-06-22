@@ -23,51 +23,36 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
-        Iterator<WebSocketSession> iter = sessionMap.values().iterator();
-
-        while(iter.hasNext()){
-            WebSocketSession sess = iter.next();
-            synchronized (sess){
-                if(sess.isOpen()){
-                    sess.sendMessage(message);
-                }
-
-            }
-        }
+        echoMessage(message);
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         String nickName = session.getAttributes().get("nickName").toString();
-        
-        // 현재 접속자 리스폰 시키기
-        String messageToMe = jsonService.MakeJson(ChatCommand.IAmBorn, nickName, "");
-        session.sendMessage(new TextMessage(messageToMe));
-
-        // 기존 접속자들에게 현재 접속자 존재 알림
-        String alertMeToOthers = jsonService.MakeJson(ChatCommand.YouAreBorn, nickName, "");
-
-        for(var i : sessionMap.values()){
-            i.sendMessage(new TextMessage(alertMeToOthers));
-        }
-
-
-        // 현재 접속자에게 기존 접속자들 정보 주기
-//        for(var i : sessionMap.keySet()){
-//            String peopleInAlready = jsonService.MakeJson(ChatCommand.YouAreBorn, i, "");
-//
-//            session.sendMessage(new TextMessage(peopleInAlready));
-//        }
-
-
         sessionMap.put(nickName, session);
 
-
+        TextMessage bornMessage = new TextMessage(jsonService.MakeJson(ChatCommand.userBorn, nickName, ""));
+        echoMessage(bornMessage);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionMap.remove(session.getAttributes().get("nickName").toString());
+    }
+
+
+    private void echoMessage(TextMessage message) throws IOException {
+        Iterator<WebSocketSession> iter = sessionMap.values().iterator();
+
+        while (iter.hasNext()) {
+            WebSocketSession sess = iter.next();
+            synchronized (sess) {
+                if (sess.isOpen()) {
+                    sess.sendMessage(message);
+                }
+
+            }
+        }
     }
 }
 
