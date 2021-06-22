@@ -10,7 +10,7 @@ export class MyBall{
     constructor(id, socketService) {
         this.id = id;
         this.socketService = socketService;
-        this.ball = new Ball(this.id, 0);
+        this.ball = new Ball(this.id, 0, 0, 100);
         this.motion = new MyMotion(id, socketService);
     }
 
