@@ -1,6 +1,7 @@
 package com.joebrooks.helloworld.Interceptor;
 
 import com.joebrooks.helloworld.Common.JwtTokenProvider;
+import com.joebrooks.helloworld.Dto.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

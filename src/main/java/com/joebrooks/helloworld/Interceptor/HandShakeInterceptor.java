@@ -33,7 +33,7 @@ public class HandShakeInterceptor extends HttpSessionHandshakeInterceptor {
         Cookie token = WebUtils.getCookie(servletRequest, cookieName);
 
         if(token != null && !token.equals("")){
-            attributes.put("nickName",jwtTokenProvider.getNicknameFromClaims(token.getValue()));
+            attributes.put("nickName", jwtTokenProvider.getNicknameFromClaims(token.getValue()));
         }
 
         return super.beforeHandshake(request, response, wsHandler, attributes);

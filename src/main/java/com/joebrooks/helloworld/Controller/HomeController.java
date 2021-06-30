@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,16 +21,11 @@ public class HomeController {
 
     @GetMapping
     public String checkUserStatus(HttpServletRequest req){
-        Cookie[] cookies = req.getCookies();
+        Cookie cookie = WebUtils.getCookie(req, cookieName);
 
-        if(cookies != null){
-            for(var i : cookies){
-                if(i.getName().equals(cookieName)){
-                    return "redirect:/auth/world";
-                }
-            }
+        if(cookie != null && cookie.getName().equals(cookieName)){
+            return "redirect:/auth/world";
         }
-
 
         return "redirect:/login";
     }
