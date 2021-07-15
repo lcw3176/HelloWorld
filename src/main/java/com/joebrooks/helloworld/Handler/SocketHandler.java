@@ -2,6 +2,7 @@ package com.joebrooks.helloworld.Handler;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.joebrooks.helloworld.Common.ChatCommand;
+import com.joebrooks.helloworld.Dto.User;
 import com.joebrooks.helloworld.Service.JsonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessionMap.remove(session.getAttributes().get("nickName").toString());
+        User.userList.remove(session.getAttributes().get("nickName").toString());
     }
 
 
