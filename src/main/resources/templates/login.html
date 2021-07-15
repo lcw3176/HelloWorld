@@ -19,10 +19,16 @@
                 공백은 허용되지 않습니다.
             </div>
 
-            <div th:if="${error} == 'exist'"
+            <div th:if="${error} == 'existIp'"
                  class="alert alert-danger alert-dismissable text-left">
-                이미 접속한 유저입니다.
+                기존 접속을 해제하고 다시 시도해 주세요.
             </div>
+
+            <div th:if="${error} == 'existNickname'"
+                 class="alert alert-danger alert-dismissable text-left">
+                이미 존재하는 유저 이름입니다.
+            </div>
+
 
             <!-- Icon -->
             <div class="fadeIn first">
