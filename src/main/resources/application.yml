@@ -1,8 +1,0 @@
-spring:
-  thymeleaf:
-    cache: false
-
-jwt:
-  secretKey: HelloOpenWorld
-  cookie:
-    name: world-token

@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.4'
+    id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
@@ -19,23 +19,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-
-    // json 라이브러리
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
-
-
-    //Json Web Token
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    compileOnly 'javax.xml.bind:jaxb-api:2.1'
 }
 
 test {
