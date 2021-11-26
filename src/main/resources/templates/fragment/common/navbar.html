@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<nav class="navbar is-light" th:fragment="fragment-navbar">
+    <div class="container is-fluid">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <p class="title is-4">MAPSHOT</p>
+            </a>
+
+            <a role="button" class="navbar-burger" onclick="navbarBurgerClick(this)">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div class="navbar-menu" id="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/manual">
+                    사용법
+                </a>
+
+                <a class="navbar-item" href="/patch-notes">
+                    패치내역
+                </a>
+
+                <a class="navbar-item" href="/contact">
+                    문의
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <a class="navbar-item" href="/opensource">
+                    오픈소스
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+</html>
