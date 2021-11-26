@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="container is-fluid tabs mt-5" th:fragment="fragment-manual-navbar">
+    <ul id="menu_select_wrap">
+        <li class="is-active"><a onclick="changePage(1)">좌표 탐색</a></li>
+        <li><a onclick="changePage(2)">반경</a></li>
+        <li><a onclick="changePage(3)">지도 종류</a></li>
+        <li><a onclick="changePage(4)">출력</a></li>
+        <li><a onclick="changePage(5)">옵션</a></li>
+        <li><a onclick="changePage(6)">수집</a></li>
+    </ul>
+
+    <script type="text/javascript">
+
+        function changeClass(pageNum){
+            var menuNavUl = document.getElementById("menu_select_wrap");
+            for(var i = 0; i < menuNavUl.childElementCount; i++){
+                menuNavUl.children[i].className = "";
+            }
+
+            menuNavUl.children[pageNum - 1].className = "is-active";
+        }
+
+        function changePage(pageNum){
+            $.ajax({
+                type:"GET",
+                url:"/manual/page",
+                data:{pageNum: pageNum},
+                dataType: "html",
+                success: function (res){
+                    changeClass(pageNum);
+                    document.getElementById("manual-wrap").innerHTML = res;
+                },
+
+                error: function (req, status, error){
+
+                },
+            });
+        }
+    </script>
+</div>
+</html>

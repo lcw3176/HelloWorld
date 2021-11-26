@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="/fragment/common/header.html :: fragment-header"/>
+</head>
+
+<body>
+<div th:replace="/fragment/common/navbar.html :: fragment-navbar"/>
+
+<div class="container is-fluid">
+
+    <div th:replace="/fragment/manual/nav.html :: fragment-manual-navbar"/>
+
+    <div class="container is-fluid card" id="manual-wrap">
+        <div th:replace="/fragment/manual/search-coor.html :: fragment-manual-content"/>
+    </div>
+
+</div>
+</body>
+</html>
