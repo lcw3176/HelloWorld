@@ -1,11 +1,19 @@
-# UTF-8
 server:
+  # UTF-8
   servlet:
     encoding:
       charset: UTF-8
+  # HTTPS
+  ssl:
+    enabled: true
+    key-store: "경로"
+    key-store-password: "비번"
+    keyStoreType: PKCS12
+    keyAlias: tomcat
 
 # thymeleaf
 spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+
