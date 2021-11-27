@@ -1,0 +1,23 @@
+# 언어와 jdk의 버전을 지정한다.
+language: java
+jdk:
+  - openjdk17
+
+branches:
+  only:
+    - master
+
+before_install:
+  - chmod 777 gradlew
+.
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+
+script: "./gradlew clean build"
+
+notifications:
+  email:
+    recipients:
+      - lcw3176@naver.com
