@@ -1,10 +1,6 @@
 window.onload = function () {
     var naverProfile = new mapshot.profile.Naver();
-    naverProfile.setKey("ny5d4sdo0e");
-
-    var proxyUrl = "https://mapshotproxyserver.herokuapp.com/test";
     var kakaoProfile = new mapshot.profile.Kakao();
-    kakaoProfile.setProxyUrl(proxyUrl)
 
     var coor = new mapshot.coors.LatLng();
     var naverTile = new mapshot.maps.NaverTile();
@@ -17,7 +13,7 @@ window.onload = function () {
     var resultType = null;
 
     var mapRadius = null;
-
+    var mapRadiusStr = "";
     var url;
     var progressBar = document.getElementById("progressBar");
 
@@ -109,20 +105,25 @@ window.onload = function () {
         switch(_km){
             case 1:
                 mapRadius = mapshot.radius.One;
+                mapRadiusStr = "one";
                 break;
             case 2:
                 mapRadius = mapshot.radius.Two;
+                mapRadiusStr = "two";
                 break;
             case 5:
                 mapRadius = mapshot.radius.Five;
+                mapRadiusStr = "five";
                 break;
             case 10:
                 mapRadius = mapshot.radius.Ten;
+                mapRadiusStr = "ten";
                 break;
             default:
                 break;
         }
 
+        naverProfile.setLevel(mapRadius);
         kakaoProfile.setLevel(_km);
         id.setAttribute('class', 'zoom is-active');
     }
@@ -209,69 +210,84 @@ window.onload = function () {
     }
 
     kakaoCapture = function(){
-        var wakeUpUrl = "https://mapshotproxyserver.herokuapp.com/wakeup";
-        var fileName = document.getElementById("bunzi-address").innerText;
-
-        progressBar.removeAttribute("value");
-        progressBar.setAttribute("class", "progress is-warning");
-        document.getElementById("captureStatus").innerText = "서버를 깨우는 중입니다. 곧 완료됩니다.";
-
-        kakaoTile.wakeUp(wakeUpUrl, function(){
-            progressBar.setAttribute("class", "progress is-info");
-            document.getElementById("captureStatus").innerText = "서버에 요청중입니다. 잠시 기다려주세요";
-
-            kakaoTile.draw(kakaoProfile.getUrl(), function(blob){
-
-                if(window.navigator && window.navigator.msSaveOrOpenBlob){
-                    navigator.msSaveBlob(blob, "mapshot_" + fileName + ".jpg");
-                    document.getElementById("captureStatus").innerText = "완료되었습니다.";
-                } else{
-                    url = URL.createObjectURL(blob);
-
-                    var tag = document.getElementById("resultHref");
-                    tag.href = url;
-                    tag.download = "mapshot_" + fileName + ".jpg";
-
-                    var span = document.getElementById("resultSpan");
-                    span.innerHTML = "mapshot_" + fileName + ".jpg";
-
-                    document.getElementById("captureStatus").innerText = "완료되었습니다. 생성된 링크를 확인하세요";
-                }
-
-                progressBar.setAttribute("value", 100);
-            });
-        });
-
+        console.log(kakaoProfile);
+        console.log(kakaoProfile.getUrl());
+        // var wakeUpUrl = "https://mapshotproxyserver.herokuapp.com/wakeup";
+        // var fileName = document.getElementById("bunzi-address").innerText;
+        //
+        // progressBar.removeAttribute("value");
+        // progressBar.setAttribute("class", "progress is-warning");
+        // document.getElementById("captureStatus").innerText = "서버를 깨우는 중입니다. 곧 완료됩니다.";
+        //
+        // kakaoTile.wakeUp(wakeUpUrl, function(){
+        //     progressBar.setAttribute("class", "progress is-info");
+        //     document.getElementById("captureStatus").innerText = "서버에 요청중입니다. 잠시 기다려주세요";
+        //
+        //     kakaoTile.draw(kakaoProfile.getUrl(), function(blob){
+        //
+        //         if(window.navigator && window.navigator.msSaveOrOpenBlob){
+        //             navigator.msSaveBlob(blob, "mapshot_" + fileName + ".jpg");
+        //             document.getElementById("captureStatus").innerText = "완료되었습니다.";
+        //         } else{
+        //             url = URL.createObjectURL(blob);
+        //
+        //             var tag = document.getElementById("resultHref");
+        //             tag.href = url;
+        //             tag.download = "mapshot_" + fileName + ".jpg";
+        //
+        //             var span = document.getElementById("resultSpan");
+        //             span.innerHTML = "mapshot_" + fileName + ".jpg";
+        //
+        //             document.getElementById("captureStatus").innerText = "완료되었습니다. 생성된 링크를 확인하세요";
+        //         }
+        //
+        //         progressBar.setAttribute("value", 100);
+        //     });
+        // });
+        //
 
 
     }
 
     naverCapture = function(){
-        naverProfile.setLevel(mapRadius);
+        var request = new XMLHttpRequest();
+        var data = {
+            'provider' : 0,
+            'mapType' : 0,
+            'radius' : mapRadiusStr,
+            'lat': coor.getY(),
+            'lng': coor.getX(),
+        };
 
-        naverTile.draw(coor, mapRadius, naverProfile, function(canvas){
-            var fileName = document.getElementById("bunzi-address").innerText;
+        console.log(data);
 
-            if (canvas.msToBlob) {
-                canvas.toBlob(function (blob) {
-                    navigator.msSaveBlob(blob, "mapshot_" + fileName + ".jpg");
-                    document.getElementById("captureStatus").innerText = "완료되었습니다.";
+        request.open("POST", "http://localhost:8080/", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send(JSON.stringify(data));
 
-                }, "image/jpeg");
-            } else {
-                canvas.toBlob(function (blob) {
-                    url = URL.createObjectURL(blob);
-
-                    var tag = document.getElementById("resultHref");
-                    tag.href = url;
-                    tag.download = "mapshot_" + fileName + ".jpg";
-
-                    document.getElementById("resultSpan").innerHTML = "mapshot_" + fileName + ".jpg";
-                    document.getElementById("captureStatus").innerText = "완료되었습니다. 생성된 링크를 확인하세요";
-
-                }, "image/jpeg");
-            }
-        });
+        // naverTile.draw(coor, mapRadius, naverProfile, function(canvas){
+        //     var fileName = document.getElementById("bunzi-address").innerText;
+        //
+        //     if (canvas.msToBlob) {
+        //         canvas.toBlob(function (blob) {
+        //             navigator.msSaveBlob(blob, "mapshot_" + fileName + ".jpg");
+        //             document.getElementById("captureStatus").innerText = "완료되었습니다.";
+        //
+        //         }, "image/jpeg");
+        //     } else {
+        //         canvas.toBlob(function (blob) {
+        //             url = URL.createObjectURL(blob);
+        //
+        //             var tag = document.getElementById("resultHref");
+        //             tag.href = url;
+        //             tag.download = "mapshot_" + fileName + ".jpg";
+        //
+        //             document.getElementById("resultSpan").innerHTML = "mapshot_" + fileName + ".jpg";
+        //             document.getElementById("captureStatus").innerText = "완료되었습니다. 생성된 링크를 확인하세요";
+        //
+        //         }, "image/jpeg");
+        //     }
+        // });
     }
 
     document.getElementById("default_click_level").click();
