@@ -6,8 +6,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-<!--    <script type="text/javascript"-->
-<!--            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=cf6334d96f548310595c5643cb199334&libraries=services"></script>-->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46d97694c5e976ec8af172aebc94c130&libraries=services"></script>
     <script type="text/javascript" src="/js/app.js"></script>
     <script type="text/javascript" src="/js/map.js"></script>
     <script type="text/javascript" src="/js/canvas-toBlob.js"></script>
@@ -28,7 +28,7 @@
                     <!-- 지도 -->
                     <div class="map_wrap">
                         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;">
-                            <img src="/image/morang.jpg" style="width: inherit;height: inherit;"/>
+
                         </div>
 
                         <div id="menu_wrap" class="bg_white">
@@ -122,10 +122,10 @@
                     </p>
                     <ul class="menu-list">
                         <li style="border-top: 2px solid black; margin-bottom: 3%;"></li>
-                        <li><a class="map" onclick="setBaseMap('basic', this)">일반</a></li>
+                        <li><a class="map" onclick="setBaseMap(0, this)">일반</a></li>
                         <li><a class="map" id="default_click_map"
-                               onclick="setBaseMap('satellite_base', this)">위성</a></li>
-                        <li><a class="map" onclick="setBaseMap('satellite', this)">하이브리드</a></li>
+                               onclick="setBaseMap(1, this)">위성</a></li>
+                        <li><a class="map" onclick="setBaseMap(2, this)">하이브리드</a></li>
                     </ul>
 
                     <p class="title is-6" style="margin-top: 5%; margin-bottom: 3%;">
