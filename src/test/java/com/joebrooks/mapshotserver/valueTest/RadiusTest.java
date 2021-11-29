@@ -8,7 +8,7 @@ import org.springframework.test.context.TestPropertySource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@TestPropertySource(properties = { "spring.config.location=classpath:/radius.yml" })
+@TestPropertySource(properties = { "spring.config.location=classpath:/radiusType.yml" })
 public class RadiusTest {
 
     @Value("${Radius.One.sideBlockCount}")
