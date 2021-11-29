@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.dto;
+package com.joebrooks.mapshotserver.home.dto;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,7 +1,9 @@
 package com.joebrooks.mapshotserver.controller;
 
+import com.joebrooks.mapshotserver.dto.Coor;
 import com.joebrooks.mapshotserver.dto.Map;
 import com.joebrooks.mapshotserver.enumerate.MapProvider;
+import com.joebrooks.mapshotserver.enumerate.Radius;
 import com.joebrooks.mapshotserver.enumerate.UserRecvInfo;
 import com.joebrooks.mapshotserver.service.map.IMapService;
 import com.joebrooks.mapshotserver.service.map.KakaoMapService;
@@ -32,14 +34,21 @@ public class HomeController {
 
         if(userMapInfo.get(UserRecvInfo.provider.toString()) == MapProvider.kakao){
             mapService = kakaoMapService;
-            System.out.println("카카오");
         } else {
             mapService = naverMapService;
-            System.out.println("네이버");
         }
 
+        float lat = Float.parseFloat(userMapInfo.get(UserRecvInfo.lat.toString()).toString());
+        float lng = Float.parseFloat(userMapInfo.get(UserRecvInfo.lng.toString()).toString());
+        int type = Integer.parseInt(userMapInfo.get(UserRecvInfo.mapType.toString()).toString());
+        Radius radius = Radius.valueOf(userMapInfo.get(UserRecvInfo.radius.toString()).toString());
 
-//        byte[] binary = mapService.getImage(type, radius, coor);
+        Coor centerCoor = Coor
+                .builder()
+                .lat(lat)
+                .lng(lng).build();
+
+        byte[] binary = mapService.getImage(type, radius, centerCoor);
 
 //        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(binary);
         return ResponseEntity.ok().body("헬로");
