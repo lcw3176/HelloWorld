@@ -1,6 +1,6 @@
-package com.joebrooks.mapshotserver.enumerate;
+package com.joebrooks.mapshotserver.home.datatype;
 
-public enum UserRecvInfo {
+public enum UserConfigType {
     lng,
     lat,
     provider,

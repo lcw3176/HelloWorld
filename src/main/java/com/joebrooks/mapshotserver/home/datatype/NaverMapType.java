@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.enumerate;
+package com.joebrooks.mapshotserver.home.datatype;
 
 public enum NaverMapType {
     basic,

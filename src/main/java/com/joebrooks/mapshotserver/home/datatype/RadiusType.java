@@ -1,6 +1,6 @@
-package com.joebrooks.mapshotserver.enumerate;
+package com.joebrooks.mapshotserver.home.datatype;
 
-public enum Radius {
+public enum RadiusType {
     one,
     two,
     five,
