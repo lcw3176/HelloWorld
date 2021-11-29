@@ -248,15 +248,17 @@ window.onload = function () {
 
 
     }
-
+        // basic,
+        // skyview,
+        // hybrid;
     naverCapture = function(){
         var request = new XMLHttpRequest();
         var data = {
-            'provider' : 0,
-            'mapType' : 0,
-            'radius' : mapRadiusStr,
-            'lat': coor.getY(),
-            'lng': coor.getX(),
+            "provider" : "naver",
+            "mapType" : "skyview",
+            "radius" : "one",
+            "lat": 37.454545,
+            "lng": 125.342424
         };
 
         console.log(data);
