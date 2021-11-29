@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.controller;
+package com.joebrooks.mapshotserver.manual;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

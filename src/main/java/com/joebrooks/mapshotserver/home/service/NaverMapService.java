@@ -1,9 +1,9 @@
-package com.joebrooks.mapshotserver.service.map;
+package com.joebrooks.mapshotserver.home.service;
 
-import com.joebrooks.mapshotserver.dto.Coor;
-import com.joebrooks.mapshotserver.enumerate.CommonMapType;
-import com.joebrooks.mapshotserver.enumerate.MapProvider;
-import com.joebrooks.mapshotserver.enumerate.Radius;
+import com.joebrooks.mapshotserver.home.datatype.RadiusType;
+import com.joebrooks.mapshotserver.home.dto.Coor;
+import com.joebrooks.mapshotserver.home.datatype.CommonMapType;
+import com.joebrooks.mapshotserver.home.datatype.MapProviderType;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class NaverMapService implements IMapService {
 
 
     @Override
-    public byte[] getImage(int type, Radius radius, Coor coor){
-        String mapType = mapTypeSerivce.getTypeByProvider(MapProvider.naver, CommonMapType.values()[type]);
+    public byte[] getImage(int type, RadiusType radiusType, Coor coor){
+        String mapType = mapTypeSerivce.getTypeByProvider(MapProviderType.naver, CommonMapType.values()[type]);
 //        map.setKey("네이버키값");
 
 

@@ -1,18 +1,18 @@
-package com.joebrooks.mapshotserver.service.map;
+package com.joebrooks.mapshotserver.home.service;
 
-import com.joebrooks.mapshotserver.enumerate.CommonMapType;
-import com.joebrooks.mapshotserver.enumerate.KakaoMapType;
-import com.joebrooks.mapshotserver.enumerate.MapProvider;
-import com.joebrooks.mapshotserver.enumerate.NaverMapType;
+import com.joebrooks.mapshotserver.home.datatype.CommonMapType;
+import com.joebrooks.mapshotserver.home.datatype.KakaoMapType;
+import com.joebrooks.mapshotserver.home.datatype.MapProviderType;
+import com.joebrooks.mapshotserver.home.datatype.NaverMapType;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MapTypeSerivce {
 
-    public String getTypeByProvider(MapProvider provider, CommonMapType type){
+    public String getTypeByProvider(MapProviderType provider, CommonMapType type){
         int index = CommonMapType.valueOf(type.toString()).ordinal();
 
-        if(provider == MapProvider.naver){
+        if(provider == MapProviderType.naver){
             return NaverMapType.values()[index].toString();
         } else {
             return KakaoMapType.values()[index].toString();
