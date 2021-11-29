@@ -1,17 +1,26 @@
 package com.joebrooks.mapshotserver.home.dto;
 
-import com.joebrooks.mapshotserver.enumerate.CommonMapType;
-import com.joebrooks.mapshotserver.enumerate.MapProvider;
-import com.joebrooks.mapshotserver.enumerate.Radius;
+import com.joebrooks.mapshotserver.home.datatype.CommonMapType;
+import com.joebrooks.mapshotserver.home.datatype.MapProviderType;
+import com.joebrooks.mapshotserver.home.datatype.RadiusType;
 import lombok.Builder;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
 public class Map {
-    private MapProvider provider;
+    @NotBlank
+    private MapProviderType provider;
+
+    @NotBlank
     private CommonMapType mapType;
-    private Radius radius;
+
+    @NotBlank
+    private RadiusType radiusType;
+
+    @NotBlank
     private Coor centerCoor;
 
 }
