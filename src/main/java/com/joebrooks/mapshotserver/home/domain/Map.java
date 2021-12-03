@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.home.dto;
+package com.joebrooks.mapshotserver.home.domain;
 
 import com.joebrooks.mapshotserver.home.datatype.CommonMapType;
 import com.joebrooks.mapshotserver.home.datatype.MapProviderType;
