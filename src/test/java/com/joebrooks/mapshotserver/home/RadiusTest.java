@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.valueTest;
+package com.joebrooks.mapshotserver.home;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,13 +19,13 @@ public class RadiusTest {
 
 
     @Test
-    public void yml_읽어오기_타일갯수(){
+    public void yml_타일갯수_읽어오기(){
         final int oneSideBlockCount = 11;
         assertEquals(oneSideBlockCount, sideBlockValue);
     }
 
     @Test
-    public void yml_읽어오기_줌레벨(){
+    public void yml_줌레벨_읽어오기(){
         final int oneZoom = 18;
         assertEquals(oneZoom, zoomValue);
     }
