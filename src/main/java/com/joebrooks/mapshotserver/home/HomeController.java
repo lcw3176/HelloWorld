@@ -1,10 +1,6 @@
 package com.joebrooks.mapshotserver.home;
 
-import com.joebrooks.mapshotserver.home.dto.Coor;
-import com.joebrooks.mapshotserver.home.datatype.MapProviderType;
-import com.joebrooks.mapshotserver.home.datatype.RadiusType;
-import com.joebrooks.mapshotserver.home.datatype.UserConfigType;
-import com.joebrooks.mapshotserver.home.dto.UserConfig;
+import com.joebrooks.mapshotserver.home.domain.UserConfig;
 import com.joebrooks.mapshotserver.home.service.IMapService;
 import com.joebrooks.mapshotserver.home.service.KakaoMapService;
 import com.joebrooks.mapshotserver.home.service.NaverMapService;
@@ -14,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("/")

@@ -16,8 +16,8 @@ public class ManualController {
     }
 
     @GetMapping("/page")
-    public String changePage(@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNumber, Model model){
-        String pageName = null;
+    public String changePage(@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNumber){
+        String pageName = "";
 
         switch (pageNumber){
             case 1:
@@ -39,7 +39,6 @@ public class ManualController {
                 pageName = "start-capture";
                 break;
             default:
-                pageName = "search-coor";
                 break;
         }
 
