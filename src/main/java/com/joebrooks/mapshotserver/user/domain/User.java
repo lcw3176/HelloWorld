@@ -13,6 +13,6 @@ public class User {
     private boolean isFirstVisit;
 
     @NotBlank
-    private int visitedCount;
+    private int usingCount;
 
 }
