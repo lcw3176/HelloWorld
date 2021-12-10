@@ -2,153 +2,132 @@ package com.joebrooks.mapshotserver.service;
 
 import com.joebrooks.mapshotserver.domain.OnFailed;
 import com.joebrooks.mapshotserver.domain.OnSuccess;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class JsonMessageService {
 
-    private String successFrame = "{\n" +
-            "        \"blocks\": [\n" +
-            "        {\n" +
-            "            \"type\": \"header\",\n" +
-            "                \"text\": {\n" +
-            "            \"type\": \"plain_text\",\n" +
-            "                    \"text\": \"Success\"\n" +
-            "        }\n" +
-            "        },\n" +
-            "\n" +
-            "        {\n" +
-            "            \"type\": \"section\",\n" +
-            "                \"fields\": [\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*When:*\\n %tT\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*Type:*\\n Success\"\n" +
-            "            }\n" +
-            "\t\t\t]\n" +
-            "        },\n" +
-            "\n" +
-            "        {\n" +
-            "            \"type\": \"section\",\n" +
-            "                \"fields\": [\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*isFirstVisit:*\\n %b\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*usingCount:*\\n %d\"\n" +
-            "            },\n" +
-            "           {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*usedFunc:*\\n %s\"\n" +
-            "            }" +
-            "\t\t\t]\n" +
-            "        }\n" +
-            "\t]\n" +
-            "}";
+    private JSONObject makeJsonObject(Map<Object, Object> values){
+        JSONObject json = new JSONObject();
 
-    private String failedFrame = "{\n" +
-            "        \"blocks\": [\n" +
-            "        {\n" +
-            "            \"type\": \"header\",\n" +
-            "                \"text\": {\n" +
-            "            \"type\": \"plain_text\",\n" +
-            "                    \"text\": \"Failed\"\n" +
-            "        }\n" +
-            "        },\n" +
-            "\n" +
-            "        {\n" +
-            "            \"type\": \"section\",\n" +
-            "                \"fields\": [\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*When:*\\n %tT\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*Type:*\\n Failed\"\n" +
-            "            }\n" +
-            "\t\t\t]\n" +
-            "        },\n" +
-            "\n" +
-            "        {\n" +
-            "            \"type\": \"section\",\n" +
-            "                \"fields\": [\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*Error Title:*\\n %s\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*Error Message:*\\n %s\"\n" +
-            "            }\n" +
-            "\t\t\t]\n" +
-            "        },\n" +
-            "\n" +
-            "        {\n" +
-            "            \"type\": \"section\",\n" +
-            "                \"fields\": [\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*isFirstVisit:*\\n %b\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*usingCount:*\\n %d\"\n" +
-            "            },\n" +
-            "           {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*usedFunc:*\\n %s\"\n" +
-            "            }" +
-            "\t\t\t]\n" +
-            "        }\n" +
-            "\t]\n" +
-            "}";
+        values.forEach((key, value) -> {
+            json.put(key, value);
+        });
 
-    private String dailyFrame = "{\n" +
-            "        \"blocks\": [\n" +
-            "        {\n" +
-            "            \"type\": \"header\",\n" +
-            "                \"text\": {\n" +
-            "            \"type\": \"plain_text\",\n" +
-            "                    \"text\": \"Daily Report\"\n" +
-            "        }\n" +
-            "        },\n" +
-            "\n" +
-            "        {\n" +
-            "            \"type\": \"section\",\n" +
-            "                \"fields\": [\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*todayVisitor:*\\n %d\"\n" +
-            "            },\n" +
-            "            {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*successCount:*\\n %d\"\n" +
-            "            },\n" +
-            "           {\n" +
-            "                \"type\": \"mrkdwn\",\n" +
-            "                    \"text\": \"*failedCount:*\\n %d\"\n" +
-            "            }" +
-            "\t\t\t]\n" +
-            "        }\n" +
-            "\t]\n" +
-            "}";
+        return json;
+    }
+
+    private JSONObject getHeader(String title){
+        Map<Object, Object> map = new HashMap<>();
+        map.put("type", "plain_text");
+        map.put("text", title);
+
+        JSONObject block = makeJsonObject(map);
+
+        map.clear();
+        map.put("type", "header");
+        map.put("text", block);
+
+        return makeJsonObject(map);
+    }
+
+    private JSONObject getSection(Map<String, Object> map){
+        JSONArray jArr = new JSONArray();
+
+        map.forEach((key, value) -> {
+            JSONObject json = new JSONObject();
+            json.put("type", "mrkdwn");
+            json.put("text", key + ": " + value);
+
+            jArr.add(json);
+        });
+
+        JSONObject json = new JSONObject();
+        json.put("fields", jArr);
+        json.put("type", "section");
+
+        return json;
+    }
+
+    private JSONObject getBlock(JSONObject ... jsons){
+        JSONArray arr = new JSONArray();
+
+        for(var i : jsons){
+            arr.add(i);
+        }
+
+        JSONObject json = new JSONObject();
+        json.put("blocks", arr);
+
+        return json;
+    }
 
     public String makeSuccessMessage(OnSuccess success){
-        return String.format(successFrame, success.getDate(), success.isFirstVisit(), success.getUsingCount(), success.getUsedFunc());
+        JSONObject headerJson = getHeader("Success");
+        Map<String, Object> map = new HashMap<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
+
+        map.put("사용 시간", simpleDateFormat.format(new Date()));
+
+        JSONObject sectionOneJson = getSection(map);
+        map.clear();
+
+        map.put("사용 횟수", success.getUsingCount());
+        map.put("사용한 기능", success.getUsedFunc());
+
+        JSONObject sectionTwoJson = getSection(map);
+        
+        return getBlock(headerJson, sectionOneJson, sectionTwoJson).toJSONString();
     }
 
     public String makeFailedMessage(OnFailed failed){
-        return String.format(failedFrame, failed.getDate(), failed.getTitle(), failed.getMessage(), failed.isFirstVisit(), failed.getUsingCount(), failed.getUsedFunc());
+        JSONObject headerJson = getHeader("Failed");
+        Map<String, Object> map = new HashMap<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
+
+        map.put("사용 시간", simpleDateFormat.format(new Date()));
+
+        JSONObject sectionOneJson = getSection(map);
+        map.clear();
+
+        map.put("에러명", failed.getTitle());
+        map.put("메세지", failed.getMessage());
+
+        JSONObject sectionTwoJson = getSection(map);
+        map.clear();
+
+        map.put("사용 횟수", failed.getUsingCount());
+        map.put("사용한 기능", failed.getUsedFunc());
+
+        JSONObject sectionThreeJson = getSection(map);
+
+        return getBlock(headerJson, sectionOneJson, sectionTwoJson, sectionThreeJson).toJSONString();
     }
 
-    public String makeDaliyMessage(int userNumber, int successCount, int failedCount){
-        return String.format(dailyFrame, userNumber, successCount, failedCount);
+    public String makeDailyMessage(int userNumber, int successCount, int failedCount){
+        JSONObject headerJson = getHeader("Daily Report");
+        Map<String, Object> map = new HashMap<>();
+        map.put("사용한 유저", userNumber);
+
+        JSONObject sectionOneJson = getSection(map);
+
+        map.clear();
+        map.put("호출 성공 횟수", successCount);
+        map.put("호출 실패 횟수", failedCount);
+
+
+        JSONObject sectionTwoJson = getSection(map);
+
+        return getBlock(headerJson, sectionOneJson, sectionTwoJson).toJSONString();
     }
 
 }
