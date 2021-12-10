@@ -23,40 +23,38 @@ public class UserLoggingService {
         this.jsonMessageService = jsonMessageService;
     }
 
-    private void preCheck(boolean isFirst){
-        if(isFirst){
+    private void preCheck(int usingCount){
+        if(usingCount == 1){
             userCount.set(userCount.get() + 1);
         }
     }
 
     public void success(OnSuccess onSuccess){
-        preCheck(onSuccess.isFirstVisit());
+        preCheck(onSuccess.getUsingCount());
 
         successCount.set(successCount.get() + 1);
-        onSuccess.setDate(new Date());
 
         String stringifyJsonMessage = jsonMessageService.makeSuccessMessage(onSuccess);
-        slackService.sendMesseage(stringifyJsonMessage);
+        slackService.sendMessage(stringifyJsonMessage);
     }
 
     public void failed(OnFailed onFailed){
-        preCheck(onFailed.isFirstVisit());
+        preCheck(onFailed.getUsingCount());
 
         failedCount.set(failedCount.get() + 1);
-        onFailed.setDate(new Date());
 
         String stringifyJsonMessage = jsonMessageService.makeFailedMessage(onFailed);
-        slackService.sendMesseage(stringifyJsonMessage);
+        slackService.sendMessage(stringifyJsonMessage);
     }
 
     @Scheduled(cron = "0 0 0 * * *")
-    private void dailyReport(){
+    public void dailyReport(){
         int todayUser = userCount.get();
         int todaySuccess = successCount.get();
         int todayFailed = failedCount.get();
 
-        String stringifyJsonMessage = jsonMessageService.makeDaliyMessage(todayUser, todaySuccess, todayFailed);
-        slackService.sendMesseage(stringifyJsonMessage);
+        String stringifyJsonMessage = jsonMessageService.makeDailyMessage(todayUser, todaySuccess, todayFailed);
+        slackService.sendMessage(stringifyJsonMessage);
 
         userCount.set(0);
         successCount.set(0);
