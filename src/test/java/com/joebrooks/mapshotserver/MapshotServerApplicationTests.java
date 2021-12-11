@@ -7,7 +7,6 @@ import org.springframework.test.context.TestPropertySource;
 
 
 @SpringBootTest
-@TestPropertySource(locations= "classpath:additional/radius.yml")
 class MapshotServerApplicationTests {
 
 
