@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 @Service
 public class JsonMessageService {
@@ -74,6 +75,7 @@ public class JsonMessageService {
         Map<String, Object> map = new HashMap<>();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 
         map.put("사용 시간", simpleDateFormat.format(new Date()));
 
@@ -93,6 +95,7 @@ public class JsonMessageService {
         Map<String, Object> map = new HashMap<>();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 
         map.put("사용 시간", simpleDateFormat.format(new Date()));
 
