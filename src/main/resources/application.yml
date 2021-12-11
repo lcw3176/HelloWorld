@@ -3,20 +3,12 @@ server:
   servlet:
     encoding:
       charset: UTF-8
-  # HTTPS
-#  ssl:
-#    enabled: true
-#    key-store: "경로"
-#    key-store-password: "비번"
-#    keyStoreType: PKCS12
-#    keyAlias: tomcat
+  port: ${port:8080}
 
 # thymeleaf
-#spring:
-#  thymeleaf:
-#    prefix: classpath:/templates/
-#    suffix: .html
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
 
-slack:
-  url: 
 
