@@ -4,11 +4,9 @@ import com.joebrooks.mapshotserver.domain.OnFailed;
 import com.joebrooks.mapshotserver.domain.OnSuccess;
 import com.joebrooks.mapshotserver.service.UserLoggingService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
 public class LogController {
 
