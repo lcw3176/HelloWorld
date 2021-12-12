@@ -5,7 +5,6 @@ import com.joebrooks.mapshotserver.domain.OnSuccess;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -47,7 +46,7 @@ public class UserLoggingService {
         slackService.sendMessage(stringifyJsonMessage);
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     public void dailyReport(){
         int todayUser = userCount.get();
         int todaySuccess = successCount.get();
