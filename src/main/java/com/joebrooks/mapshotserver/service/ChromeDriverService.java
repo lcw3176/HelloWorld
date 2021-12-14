@@ -25,7 +25,7 @@ public class ChromeDriverService {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
                 .host("mapshot.herokuapp.com")
-                .path("/proxy/kakao")
+                .path("/proxy/kakao/crawl")
                 .queryParam("lat", kakaoMapInfo.getLat())
                 .queryParam("lng", kakaoMapInfo.getLng())
                 .queryParam("level", kakaoMapInfo.getLevel())
