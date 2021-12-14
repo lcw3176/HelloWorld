@@ -17,7 +17,7 @@ public class ChromeDriverService {
     private CallableChromeDriver callableChromeDriver;
 
     public ChromeDriverService() throws Exception {
-        executorService = Executors.newFixedThreadPool(4);
+        executorService = Executors.newFixedThreadPool(2);
         callableChromeDriver = new CallableChromeDriver();
     }
 
