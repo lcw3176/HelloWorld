@@ -4,8 +4,8 @@ import com.joebrooks.mapshotserver.domain.KakaoMap;
 import com.joebrooks.mapshotserver.service.ChromeDriverService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 @CrossOrigin("https://testservermapshot.netlify.app")
 @RestController
@@ -25,11 +25,5 @@ public class MapController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
     }
 
-
-    @GetMapping
-    public String getKakaoMap(@ModelAttribute KakaoMap kakaoMap, Model model){
-        model.addAttribute("kakaoMapInfo", kakaoMap);
-
-        return "proxy/kakao";
-    }
 }
+
