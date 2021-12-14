@@ -6,7 +6,7 @@ import com.joebrooks.mapshotserver.service.UserLoggingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
+@CrossOrigin("https://testservermapshot.netlify.app")
 @RestController
 public class LogController {
 
@@ -24,7 +24,7 @@ public class LogController {
             userLoggingService.success(onSuccess);
 
         } catch (Exception e){
-            System.out.println(e);
+
             ResponseEntity.badRequest().build();
         }
 
@@ -40,7 +40,7 @@ public class LogController {
             userLoggingService.failed(onFailed);
 
         } catch (Exception e){
-            System.out.println(e);
+
             ResponseEntity.badRequest().build();
         }
 
