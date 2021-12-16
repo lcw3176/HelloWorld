@@ -1,7 +1,6 @@
 package com.joebrooks.mapshotserver.util;
 
 import com.google.common.collect.ImmutableMap;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,6 +9,7 @@ import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.http.HttpMethod;
 
 import java.lang.reflect.Method;
+import java.util.Base64;
 import java.util.Map;
 
 public class ChromeDriverEx extends ChromeDriver {
@@ -30,7 +30,7 @@ public class ChromeDriverEx extends ChromeDriver {
         defineCommand.invoke(super.getCommandExecutor(), "sendCommand", cmd);
     }
 
-    public <X> X getFullScreenshotAs(OutputType<X> outputType) {
+    public byte[] getFullScreenshot() {
         Object metrics = sendEvaluate(
                 "({" +
                         "width: Math.max(window.innerWidth,document.body.scrollWidth,document.documentElement.scrollWidth)|0," +
@@ -41,8 +41,9 @@ public class ChromeDriverEx extends ChromeDriver {
         sendCommand("Emulation.setDeviceMetricsOverride", metrics);
         Object result = sendCommand("Page.captureScreenshot", ImmutableMap.of("format", "jpeg", "fromSurface", true));
         sendCommand("Emulation.clearDeviceMetricsOverride", ImmutableMap.of());
-        String base64EncodedPng = (String)((Map<String, ?>)result).get("data");
-        return outputType.convertFromBase64Png(base64EncodedPng);
+        String base64Encoded = (String)((Map<String, ?>)result).get("data");
+
+        return  Base64.getMimeDecoder().decode(base64Encoded);
     }
 
     protected Object sendCommand(String cmd, Object params) {
