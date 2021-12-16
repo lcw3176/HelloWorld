@@ -12,18 +12,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/proxy/kakao")
 public class MapController {
 
-    private ChromeDriverService chromeDriverService;
+    private final ChromeDriverService chromeDriverService;
 
     public MapController(ChromeDriverService chromeDriverService){
         this.chromeDriverService = chromeDriverService;
     }
 
     @PostMapping
-    public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) throws Exception {
+    public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) {
         byte[] srcFile = chromeDriverService.getImage(kakaoMapInfo);
 
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
     }
+
 
 }
 
