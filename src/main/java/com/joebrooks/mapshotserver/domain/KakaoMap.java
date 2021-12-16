@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class KakaoMap {
-    private float lat;
-    private float lng;
+    private double lat;
+    private double lng;
     private String level;
     private String type;
 }
