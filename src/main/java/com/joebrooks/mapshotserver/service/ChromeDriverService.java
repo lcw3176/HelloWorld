@@ -23,13 +23,14 @@ public class ChromeDriverService {
 
     private WebDriverWait waiter;
     private ChromeDriverEx driver;
+//    private static int waitNumber = 0;
 
     public ChromeDriverService() throws Exception {
         this.driver = new ChromeDriverEx(ChromeOptionUtil.getInstance().getOptions());
         this.waiter = new WebDriverWait(this.driver, 30);
     }
 
-    public synchronized byte[] getImage(KakaoMap kakaoMapInfo) {
+    public String getImage(KakaoMap kakaoMapInfo) {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
                 .host("mapshot.herokuapp.com")
@@ -42,10 +43,9 @@ public class ChromeDriverService {
 
         driver.get(uri.toString());
         waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
-        byte[] srcFile = driver.getFullScreenshotAs(OutputType.BYTES);
 
 
-        return srcFile;
+        return driver.getFullScreenshotAs(OutputType.BASE64);
     }
 
     @PreDestroy
