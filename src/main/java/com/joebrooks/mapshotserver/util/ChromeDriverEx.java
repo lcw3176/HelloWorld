@@ -1,7 +1,6 @@
 package com.joebrooks.mapshotserver.util;
 
 import com.google.common.collect.ImmutableMap;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -42,9 +41,9 @@ public class ChromeDriverEx extends ChromeDriver {
         sendCommand("Emulation.setDeviceMetricsOverride", metrics);
         Object result = sendCommand("Page.captureScreenshot", ImmutableMap.of("format", "jpeg", "fromSurface", true));
         sendCommand("Emulation.clearDeviceMetricsOverride", ImmutableMap.of());
-        byte[] bytes = (byte[])((Map<byte[], ?>)result).get("data");
+        String base64Encoded = (String)((Map<String, ?>)result).get("data");
 
-        return bytes;
+        return  Base64.getMimeDecoder().decode(base64Encoded);
     }
 
     protected Object sendCommand(String cmd, Object params) {
