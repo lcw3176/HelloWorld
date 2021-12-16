@@ -29,7 +29,7 @@ public class ChromeDriverService {
         this.waiter = new WebDriverWait(this.driver, 30);
     }
 
-    public byte[] getImage(KakaoMap kakaoMapInfo) {
+    public synchronized byte[] getImage(KakaoMap kakaoMapInfo) {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
                 .host("mapshot.herokuapp.com")
