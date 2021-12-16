@@ -21,7 +21,7 @@ public class MapController {
     @PostMapping
     public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
-        String srcFile = chromeDriverService.getImage(kakaoMapInfo);
+        byte[] srcFile = chromeDriverService.getImage(kakaoMapInfo);
 
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
     }
