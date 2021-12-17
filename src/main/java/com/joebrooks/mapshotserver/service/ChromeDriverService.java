@@ -12,7 +12,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PreDestroy;
-import java.util.ArrayList;
+import java.time.Duration;
 
 @Service
 public class ChromeDriverService {
@@ -22,7 +22,7 @@ public class ChromeDriverService {
 
     public ChromeDriverService() throws Exception {
         this.driver = new ChromeDriverEx(ChromeOptionUtil.getInstance().getOptions());
-        this.waiter = new WebDriverWait(this.driver, 30);
+        this.waiter = new WebDriverWait(this.driver, Duration.ofSeconds(30));
     }
 
     public synchronized byte[] getImage(KakaoMap kakaoMapInfo) {
@@ -37,13 +37,14 @@ public class ChromeDriverService {
                 .build(true);
 
         ((JavascriptExecutor) driver).executeScript("window.open()");
+        driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
         driver.get(uri.toString());
         waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
+
         byte[] srcFile = driver.getFullScreenshot();
         driver.close();
 
-        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(0));
+        driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
         return srcFile;
     }
