@@ -29,8 +29,22 @@ dependencies {
     // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
-    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
-    implementation 'commons-io:commons-io:2.6'
+//    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+//    implementation 'org.seleniumhq.selenium:selenium-java:4.1.0'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-api
+    implementation 'org.seleniumhq.selenium:selenium-api:4.1.0'
+
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.0'
+
+// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support
+    implementation 'org.seleniumhq.selenium:selenium-support:4.1.0'
+// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver
+    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.0'
+
+
 }
 
 test {
