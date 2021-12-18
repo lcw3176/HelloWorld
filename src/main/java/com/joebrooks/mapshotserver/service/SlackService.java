@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class SlackService {
 
-    private String url;
+    private final String url;
 
     public SlackService(){
         this.url = System.getenv("SLACK_URL");
