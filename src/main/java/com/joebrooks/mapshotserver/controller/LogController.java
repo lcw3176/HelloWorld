@@ -2,7 +2,7 @@ package com.joebrooks.mapshotserver.controller;
 
 import com.joebrooks.mapshotserver.domain.OnFailed;
 import com.joebrooks.mapshotserver.domain.OnSuccess;
-import com.joebrooks.mapshotserver.service.UserLoggingService;
+import com.joebrooks.mapshotserver.service.SendLogService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class LogController {
 
-    private UserLoggingService userLoggingService;
+    private final SendLogService sendLogService;
 
-    public LogController(UserLoggingService userLoggingService){
-        this.userLoggingService = userLoggingService;
+    public LogController(SendLogService sendLogService){
+        this.sendLogService = sendLogService;
     }
 
     @RequestMapping("/log/success")
@@ -21,10 +21,8 @@ public class LogController {
     public ResponseEntity onSuccess(@RequestBody OnSuccess onSuccess){
 
         try{
-            userLoggingService.success(onSuccess);
-
+            sendLogService.success(onSuccess);
         } catch (Exception e){
-
             ResponseEntity.badRequest().build();
         }
 
@@ -37,10 +35,8 @@ public class LogController {
     public ResponseEntity onFailed(@RequestBody OnFailed onFailed){
 
         try{
-            userLoggingService.failed(onFailed);
-
+            sendLogService.failed(onFailed);
         } catch (Exception e){
-
             ResponseEntity.badRequest().build();
         }
 

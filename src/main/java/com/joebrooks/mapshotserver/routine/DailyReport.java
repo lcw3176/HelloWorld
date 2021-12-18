@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DailyReport {
 
-    private final MakeMessageService makeDailyMessage;
+    private final MakeMessageService makeMessageService;
     private final SlackService slackService;
 
     @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
@@ -20,7 +20,7 @@ public class DailyReport {
         int todaySuccess = DailyInfo.getSuccessCount();
         int todayFailed = DailyInfo.getFailedCount();
 
-        String stringifyJsonMessage = makeDailyMessage.makeDailyMessage(todayUser, todaySuccess, todayFailed);
+        String stringifyJsonMessage = makeMessageService.makeDailyMessage(todayUser, todaySuccess, todayFailed);
         slackService.sendMessage(stringifyJsonMessage);
         DailyInfo.initData();
     }
