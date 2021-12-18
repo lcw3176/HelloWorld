@@ -1,8 +1,11 @@
 package com.joebrooks.mapshotserver.service;
 
 import com.joebrooks.mapshotserver.domain.KakaoMap;
-import com.joebrooks.mapshotserver.util.ChromeDriverEx;
-import com.joebrooks.mapshotserver.util.ChromeOptionUtil;
+import com.joebrooks.mapshotserver.component.ChromeDriverEx;
+import com.joebrooks.mapshotserver.component.ChromeOptionEx;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,11 +20,11 @@ import java.time.Duration;
 @Service
 public class ChromeDriverService {
 
-    private WebDriverWait waiter;
-    private ChromeDriverEx driver;
+    private final WebDriverWait waiter;
+    private final ChromeDriverEx driver;
 
-    public ChromeDriverService() throws Exception {
-        this.driver = new ChromeDriverEx(ChromeOptionUtil.getInstance().getOptions());
+    public ChromeDriverService(ChromeDriverEx driver) {
+        this.driver = driver;
         this.waiter = new WebDriverWait(this.driver, Duration.ofSeconds(30));
     }
 
