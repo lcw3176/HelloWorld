@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class UserLoggingServiceTest {
 
     @Autowired
-    private UserLoggingService userLoggingService;
+    private SendLogService userLoggingService;
 
     @Test
     public void successTest(){
@@ -34,8 +34,4 @@ public class UserLoggingServiceTest {
         userLoggingService.failed(onFailed);
     }
 
-    @Test
-    public void dailyReportTest(){
-        userLoggingService.dailyReport();
-    }
 }
