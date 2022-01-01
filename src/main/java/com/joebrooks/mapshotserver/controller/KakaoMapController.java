@@ -19,7 +19,7 @@ public class KakaoMapController {
     }
 
     @PostMapping
-    public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) {
+    public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) throws Exception {
 
         byte[] srcFile = chromeDriverService.getImage(kakaoMapInfo);
 
