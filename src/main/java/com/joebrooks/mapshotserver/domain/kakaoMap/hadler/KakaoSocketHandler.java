@@ -5,12 +5,13 @@ import com.joebrooks.mapshotserver.domain.kakaoMap.dto.KakaoMap;
 import com.joebrooks.mapshotserver.domain.kakaoMap.service.ChromeDriverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-
+@CrossOrigin("https://testservermapshot.netlify.app")
 @Component
 @RequiredArgsConstructor
 public class KakaoSocketHandler extends TextWebSocketHandler {
