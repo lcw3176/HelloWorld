@@ -1,5 +1,6 @@
 package com.joebrooks.mapshotserver.service;
 
+import com.joebrooks.mapshotserver.component.ChromeDriverEx;
 import com.joebrooks.mapshotserver.domain.KakaoMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -18,10 +19,10 @@ import java.time.Duration;
 public class ChromeDriverService {
 
     private final WebDriverWait waiter;
-    private final ChromeDriver driver;
+    private final ChromeDriverEx driver;
 
-    public ChromeDriverService() {
-        this.driver = new ChromeDriver();
+    public ChromeDriverService(ChromeDriverEx driver) {
+        this.driver = driver;
         this.waiter = new WebDriverWait(this.driver, Duration.ofSeconds(30));
     }
 
