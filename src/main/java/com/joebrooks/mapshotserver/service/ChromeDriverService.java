@@ -2,33 +2,22 @@ package com.joebrooks.mapshotserver.service;
 
 import com.joebrooks.mapshotserver.component.ChromeDriverEx;
 import com.joebrooks.mapshotserver.domain.KakaoMap;
-import lombok.extern.java.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.PreDestroy;
 import java.time.Duration;
 
 @Service
 public class ChromeDriverService {
 
-    private final WebDriverWait waiter;
-    private final ChromeDriverEx driver;
 
-    public ChromeDriverService(ChromeDriverEx driver) {
-        this.driver = driver;
-        this.waiter = new WebDriverWait(this.driver, Duration.ofSeconds(30));
-    }
-
-    public synchronized byte[] getImage(KakaoMap kakaoMapInfo) {
+    public synchronized byte[] getImage(KakaoMap kakaoMapInfo) throws Exception {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
                 .host("mapshot.herokuapp.com")
@@ -39,8 +28,9 @@ public class ChromeDriverService {
                 .queryParam("type", kakaoMapInfo.getType())
                 .build(true);
 
-        ((JavascriptExecutor) driver).executeScript("window.open()");
-        driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+        ChromeDriverEx driver = new ChromeDriverEx();
+        WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(30));
+
         driver.get(uri.toString());
         waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
@@ -51,14 +41,9 @@ public class ChromeDriverService {
         byte[] srcFile = driver.findElement(By.id("map")).getScreenshotAs(OutputType.BYTES);
 
         driver.close();
-        driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
+        driver.quit();
 
         return srcFile;
-    }
-
-    @PreDestroy
-    private void closeDriver(){
-        this.driver.quit();
     }
 
 
