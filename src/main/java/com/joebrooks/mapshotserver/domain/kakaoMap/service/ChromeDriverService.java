@@ -13,10 +13,10 @@ import java.time.Duration;
 
 @Service
 public class ChromeDriverService {
-    private boolean running = false;
+    private boolean available = true;
 
     public byte[] getImage(KakaoMap kakaoMapInfo) throws Exception {
-        running = true;
+        available = false;
 
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
@@ -39,14 +39,14 @@ public class ChromeDriverService {
         driver.close();
         driver.quit();
 
-        running = false;
+        available = true;
 
         return srcFile;
     }
 
 
-    public synchronized boolean isRunning(){
-        return this.running;
+    public synchronized boolean isAvailable(){
+        return this.available;
     }
 
 
