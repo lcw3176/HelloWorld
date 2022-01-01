@@ -15,7 +15,7 @@ import java.time.Duration;
 public class ChromeDriverService {
 
 
-    public byte[] getImage(KakaoMap kakaoMapInfo) throws Exception {
+    public synchronized byte[] getImage(KakaoMap kakaoMapInfo) throws Exception {
         UriComponents uri = UriComponentsBuilder.newInstance()
                 .scheme("https")
                 .host("mapshot.herokuapp.com")
