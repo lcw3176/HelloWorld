@@ -61,13 +61,15 @@
     var options = {
         center: new kakao.maps.LatLng(lat, lng),
         level: zoomLevel,
-        draggable:false
+        draggable: false,
+        zoomable: false,
     };
     container.style.height = width + "px";
     container.style.width = width + "px";
 
     var map = new kakao.maps.Map(container, options);
     map.setMapTypeId(maptype);
+    map.addOverlayMapTypeId('use_district');
     map.relayout();
 
     kakao.maps.event.addListener(map, 'tilesloaded', function() {
