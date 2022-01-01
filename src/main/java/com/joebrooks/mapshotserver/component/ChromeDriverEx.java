@@ -19,7 +19,7 @@ import java.util.Base64;
 import java.util.Map;
 
 @Component
-public class ChromeDriverEx extends ChromeDriver implements TakesScreenshot {
+public class ChromeDriverEx extends ChromeDriver {
 
     public ChromeDriverEx() throws Exception {
         this(new ChromeOptionEx().getOptions());
@@ -63,20 +63,4 @@ public class ChromeDriverEx extends ChromeDriver implements TakesScreenshot {
         return ((Map<String, ?>)result).get("value");
     }
 
-    @Override
-    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
-
-        Response response = execute(DriverCommand.SCREENSHOT, ImmutableMap.of("format", "jpeg", "fromSurface", true));
-        Object result = response.getValue();
-        if (result instanceof String) {
-            String base64EncodedPng = (String) result;
-            return outputType.convertFromBase64Png(base64EncodedPng);
-        } else if (result instanceof byte[]) {
-            return outputType.convertFromPngBytes((byte[]) result);
-        } else {
-            throw new RuntimeException(String.format("Unexpected result for %s command: %s",
-                    DriverCommand.SCREENSHOT,
-                    result == null ? "null" : result.getClass().getName() + " instance"));
-        }
-    }
 }
