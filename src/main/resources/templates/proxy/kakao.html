@@ -69,7 +69,7 @@
 
     var map = new kakao.maps.Map(container, options);
     map.setMapTypeId(maptype);
-    map.addOverlayMapTypeId('use_district');
+    map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
     map.relayout();
 
     kakao.maps.event.addListener(map, 'tilesloaded', function() {
