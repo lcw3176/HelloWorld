@@ -66,7 +66,7 @@ public class ChromeDriverEx extends ChromeDriver implements TakesScreenshot {
     @Override
     public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
 
-        Response response = execute(DriverCommand.SCREENSHOT, ImmutableMap.of("format", "jpeg"));
+        Response response = execute(DriverCommand.SCREENSHOT, ImmutableMap.of("format", "jpeg", "fromSurface", true));
         Object result = response.getValue();
         if (result instanceof String) {
             String base64EncodedPng = (String) result;
