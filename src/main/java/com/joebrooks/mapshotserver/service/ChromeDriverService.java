@@ -1,13 +1,10 @@
 package com.joebrooks.mapshotserver.service;
 
 import com.joebrooks.mapshotserver.domain.KakaoMap;
-import com.joebrooks.mapshotserver.component.ChromeDriverEx;
-import com.joebrooks.mapshotserver.component.ChromeOptionEx;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
@@ -21,10 +18,10 @@ import java.time.Duration;
 public class ChromeDriverService {
 
     private final WebDriverWait waiter;
-    private final ChromeDriverEx driver;
+    private final ChromeDriver driver;
 
-    public ChromeDriverService(ChromeDriverEx driver) {
-        this.driver = driver;
+    public ChromeDriverService() {
+        this.driver = new ChromeDriver();
         this.waiter = new WebDriverWait(this.driver, Duration.ofSeconds(30));
     }
 
@@ -44,9 +41,9 @@ public class ChromeDriverService {
         driver.get(uri.toString());
         waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
-        byte[] srcFile = driver.getFullScreenshot();
-        driver.close();
+        byte[] srcFile = driver.findElement(By.id("map")).getScreenshotAs(OutputType.BYTES);
 
+        driver.close();
         driver.switchTo().window(driver.getWindowHandles().stream().findFirst().get());
 
         return srcFile;
