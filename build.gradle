@@ -26,23 +26,17 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    // json
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
-//    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-//    implementation 'org.seleniumhq.selenium:selenium-java:4.1.0'
-
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-api
+    // 셀레니움
     implementation 'org.seleniumhq.selenium:selenium-api:4.1.0'
-
-
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.0'
-
-// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support
     implementation 'org.seleniumhq.selenium:selenium-support:4.1.0'
-// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver
     implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.0'
+    
+    // 웹소켓
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 
 }
