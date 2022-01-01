@@ -34,10 +34,6 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.0'
     implementation 'org.seleniumhq.selenium:selenium-support:4.1.0'
     implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.0'
-    
-    // 웹소켓
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-
 
 }
 
