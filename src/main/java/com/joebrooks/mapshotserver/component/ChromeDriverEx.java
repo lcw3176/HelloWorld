@@ -1,14 +1,16 @@
 package com.joebrooks.mapshotserver.component;
 
 import com.google.common.collect.ImmutableMap;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CommandInfo;
+import org.openqa.selenium.remote.DriverCommand;
 import org.openqa.selenium.remote.HttpCommandExecutor;
+import org.openqa.selenium.remote.Response;
 import org.openqa.selenium.remote.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,7 @@ import java.util.Base64;
 import java.util.Map;
 
 @Component
-public class ChromeDriverEx extends ChromeDriver {
+public class ChromeDriverEx extends ChromeDriver implements TakesScreenshot {
 
     public ChromeDriverEx() throws Exception {
         this(new ChromeOptionEx().getOptions());
@@ -48,7 +50,7 @@ public class ChromeDriverEx extends ChromeDriver {
         sendCommand("Emulation.clearDeviceMetricsOverride", ImmutableMap.of());
         String base64Encoded = (String)((Map<String, ?>)result).get("data");
 
-        return  Base64.getMimeDecoder().decode(base64Encoded);
+        return Base64.getMimeDecoder().decode(base64Encoded);
     }
 
     protected Object sendCommand(String cmd, Object params) {
@@ -59,5 +61,22 @@ public class ChromeDriverEx extends ChromeDriver {
         Object response = sendCommand("Runtime.evaluate", ImmutableMap.of("returnByValue", true, "expression", script));
         Object result = ((Map<String, ?>)response).get("result");
         return ((Map<String, ?>)result).get("value");
+    }
+
+    @Override
+    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
+
+        Response response = execute(DriverCommand.SCREENSHOT, ImmutableMap.of("format", "jpeg"));
+        Object result = response.getValue();
+        if (result instanceof String) {
+            String base64EncodedPng = (String) result;
+            return outputType.convertFromBase64Png(base64EncodedPng);
+        } else if (result instanceof byte[]) {
+            return outputType.convertFromPngBytes((byte[]) result);
+        } else {
+            throw new RuntimeException(String.format("Unexpected result for %s command: %s",
+                    DriverCommand.SCREENSHOT,
+                    result == null ? "null" : result.getClass().getName() + " instance"));
+        }
     }
 }
