@@ -3,6 +3,7 @@ package com.joebrooks.mapshotserver.service;
 import com.joebrooks.mapshotserver.component.ChromeDriverEx;
 import com.joebrooks.mapshotserver.domain.KakaoMap;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -42,6 +43,10 @@ public class ChromeDriverService {
         driver.get(uri.toString());
         waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
+        int requiredWidth = (Integer)driver.executeScript("return document.body.parentNode.scrollWidth");
+        int requiredHeight = (Integer)driver.executeScript("return document.body.parentNode.scrollHeight");
+
+        driver.manage().window().setSize(new Dimension(requiredWidth, requiredHeight));
         byte[] srcFile = driver.findElement(By.id("map")).getScreenshotAs(OutputType.BYTES);
 
         driver.close();
