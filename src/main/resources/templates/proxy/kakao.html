@@ -23,7 +23,8 @@
     var lat = parseFloat([[${kakaoMapInfo.lat}]]);
     var lng = parseFloat([[${kakaoMapInfo.lng}]]);
     var type = ([[${kakaoMapInfo.type}]]);
-    var isLayerMode = Boolean([[${kakaoMapInfo.layerMode}]]);
+    var layer = Boolean([[${kakaoMapInfo.layerMode}]]);
+
     /*]]>*/
 
     var width;
@@ -71,7 +72,7 @@
     var map = new kakao.maps.Map(container, options);
     map.setMapTypeId(maptype);
 
-    if(isLayerMode){
+    if(layer){
         map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
     }
 
