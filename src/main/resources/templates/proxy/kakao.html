@@ -23,7 +23,7 @@
     var lat = parseFloat([[${kakaoMapInfo.lat}]]);
     var lng = parseFloat([[${kakaoMapInfo.lng}]]);
     var type = ([[${kakaoMapInfo.type}]]);
-    var isLayerMode = Boolean([[${kakaoMapInfo.layerMode}]]);
+    var layerMode = Boolean([[${kakaoMapInfo.layerMode}]]);
 
     /*]]>*/
 
@@ -72,16 +72,14 @@
     var map = new kakao.maps.Map(container, options);
     map.setMapTypeId(maptype);
 
-    if(isLayerMode){
+    if(layerMode === true){
         map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
     }
 
     map.relayout();
 
     kakao.maps.event.addListener(map, 'tilesloaded', function() {
-        setTimeout(function (){ // 오버레이 로드 완료 이벤트가 없다. 어쩔수 없이 1초정도 딜레이 해서 오버레이 로딩 대기
-            document.getElementById("checker").setAttribute("id", "checker_true");
-        }, 1000);
+        document.getElementById("checker").setAttribute("id", "checker_true");
 
     });
 
