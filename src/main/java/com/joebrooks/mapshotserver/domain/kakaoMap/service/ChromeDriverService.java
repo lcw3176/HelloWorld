@@ -15,33 +15,45 @@ import java.time.Duration;
 public class ChromeDriverService {
     private boolean available = true;
 
-    public byte[] getImage(KakaoMap kakaoMapInfo) throws Exception {
-        available = false;
+    public byte[] getImage(KakaoMap kakaoMapInfo) {
+        CustomChromeDriver driver = null;
 
-        UriComponents uri = UriComponentsBuilder.newInstance()
-                .scheme("https")
-                .host("mapshot.herokuapp.com")
-                .path("/proxy/kakao/crawl")
-                .queryParam("lat", kakaoMapInfo.getLat())
-                .queryParam("lng", kakaoMapInfo.getLng())
-                .queryParam("level", kakaoMapInfo.getLevel())
-                .queryParam("type", kakaoMapInfo.getType())
-                .build(true);
+        try{
+            available = false;
 
-        CustomChromeDriver driver = new CustomChromeDriver();
-        WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(30));
+            UriComponents uri = UriComponentsBuilder.newInstance()
+                    .scheme("https")
+                    .host("mapshot.herokuapp.com")
+                    .path("/proxy/kakao/crawl")
+                    .queryParam("lat", kakaoMapInfo.getLat())
+                    .queryParam("lng", kakaoMapInfo.getLng())
+                    .queryParam("level", kakaoMapInfo.getLevel())
+                    .queryParam("type", kakaoMapInfo.getType())
+                    .build(true);
 
-        driver.get(uri.toString());
-        waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
+            driver = new CustomChromeDriver();
+            WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-        byte[] srcFile = driver.getFullScreenshot();
+            driver.get(uri.toString());
+            waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
-        driver.close();
-        driver.quit();
+            byte[] srcFile = driver.getFullScreenshot();
 
-        available = true;
+            return srcFile;
 
-        return srcFile;
+        } catch (Exception e){
+
+            return null;
+
+        } finally {
+            if(driver != null){
+                driver.close();
+                driver.quit();
+            }
+
+            available = true;
+        }
+
     }
 
 
