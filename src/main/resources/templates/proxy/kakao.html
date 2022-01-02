@@ -76,16 +76,15 @@
         map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
     }
 
-
     map.relayout();
 
-    // kakao.maps.event.addListener(map, 'tilesloaded', function() {
-    //
-    // });
+    kakao.maps.event.addListener(map, 'tilesloaded', function() {
+        setTimeout(function (){ // 오버레이 로드 완료 이벤트가 없다. 어쩔수 없이 1초정도 딜레이 해서 오버레이 로딩 대기
+            document.getElementById("checker").setAttribute("id", "checker_true");
+        }, 1000);
 
-    window.onload = function (){
-        document.getElementById("checker").setAttribute("id", "checker_true");
-    }
+    });
+
 
 </script>
 </body>
