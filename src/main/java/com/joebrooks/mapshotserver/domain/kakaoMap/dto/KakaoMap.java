@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class KakaoMap {
-    private boolean layerMode;
+    private String layerMode;
     private double lat;
     private double lng;
     private String level;
