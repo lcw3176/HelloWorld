@@ -79,9 +79,13 @@
 
     map.relayout();
 
-    kakao.maps.event.addListener(map, 'tilesloaded', function() {
+    // kakao.maps.event.addListener(map, 'tilesloaded', function() {
+    //
+    // });
+
+    window.onload = function (){
         document.getElementById("checker").setAttribute("id", "checker_true");
-    });
+    }
 
 </script>
 </body>
