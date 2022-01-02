@@ -72,12 +72,9 @@
     var map = new kakao.maps.Map(container, options);
     map.setMapTypeId(maptype);
 
-    /*<![CDATA[*/
     if(isLayerMode){
         map.addOverlayMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
     }
-
-    /*]]>*/
 
 
     map.relayout();
