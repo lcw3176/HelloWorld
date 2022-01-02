@@ -29,6 +29,7 @@ public class ChromeDriverService {
                     .queryParam("lng", kakaoMapInfo.getLng())
                     .queryParam("level", kakaoMapInfo.getLevel())
                     .queryParam("type", kakaoMapInfo.getType())
+                    .queryParam("layerMode", kakaoMapInfo.isLayerMode())
                     .build(true);
 
             driver = new CustomChromeDriver();
@@ -40,11 +41,8 @@ public class ChromeDriverService {
             byte[] srcFile = driver.getFullScreenshot();
 
             return srcFile;
-
         } catch (Exception e){
-
             return null;
-
         } finally {
             if(driver != null){
                 driver.close();
