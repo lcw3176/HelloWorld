@@ -11,6 +11,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.time.Duration;
 
 @Service
@@ -50,12 +51,16 @@ public class ChromeDriverService {
         } catch (Exception e){
             return null;
         } finally {
-            driver.get("https://mapshot.herokuapp.com/");
             available = true;
         }
 
     }
 
+    @PreDestroy
+    public void dispose(){
+        driver.close();
+        driver.quit();
+    }
 
     public synchronized boolean isAvailable(){
         return this.available;
