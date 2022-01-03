@@ -11,13 +11,14 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ChromeDriverService {
     private boolean available = true;
 
-    public byte[] getImage(KakaoMap kakaoMapInfo) {
+    public Optional<byte[]> getImage(KakaoMap kakaoMapInfo) {
         CustomChromeDriver driver = null;
 
         try{
@@ -39,10 +40,10 @@ public class ChromeDriverService {
             driver.get(uri.toString());
             waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
-            return driver.getFullScreenshot();
+            return Optional.ofNullable(driver.getFullScreenshot());
 
         } catch (Exception e){
-            return null;
+            return Optional.empty();
         } finally {
             if(driver != null){
                 driver.close();
