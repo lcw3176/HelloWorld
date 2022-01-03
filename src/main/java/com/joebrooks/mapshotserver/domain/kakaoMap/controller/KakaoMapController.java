@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @CrossOrigin("https://testservermapshot.netlify.app")
 @RestController
@@ -24,9 +26,13 @@ public class KakaoMapController {
     @PostMapping
     public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
-        byte[] srcFile = chromeDriverService.getImage(kakaoMapInfo);
+        Optional<byte[]> srcFile = chromeDriverService.getImage(kakaoMapInfo);
 
-        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
+        if(srcFile.isPresent()){
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 
 
