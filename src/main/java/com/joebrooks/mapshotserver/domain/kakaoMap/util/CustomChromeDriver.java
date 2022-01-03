@@ -7,11 +7,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CommandInfo;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.http.HttpMethod;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.Map;
 
+@Component
 public class CustomChromeDriver extends ChromeDriver {
 
     public CustomChromeDriver() throws Exception {
