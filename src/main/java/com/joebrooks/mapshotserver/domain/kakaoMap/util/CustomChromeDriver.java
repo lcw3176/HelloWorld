@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.Map;
 
-@Component
+
 public class CustomChromeDriver extends ChromeDriver {
 
     public CustomChromeDriver() throws Exception {
