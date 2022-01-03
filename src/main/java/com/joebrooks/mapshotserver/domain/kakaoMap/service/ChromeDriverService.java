@@ -10,23 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
 public class ChromeDriverService {
     private boolean available = true;
-    private final CustomChromeDriver driver;
-    private WebDriverWait waiter;
-
-    @PostConstruct
-    public void init(){
-        waiter = new WebDriverWait(driver, Duration.ofSeconds(30));
-    }
 
     public byte[] getImage(KakaoMap kakaoMapInfo) {
+        CustomChromeDriver driver = null;
 
         try{
             available = false;
@@ -42,7 +34,8 @@ public class ChromeDriverService {
                     .queryParam("layerMode", kakaoMapInfo.isLayerMode())
                     .build(true);
 
-
+            driver = new CustomChromeDriver();
+            WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(30));
             driver.get(uri.toString());
             waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
@@ -51,16 +44,16 @@ public class ChromeDriverService {
         } catch (Exception e){
             return null;
         } finally {
+            if(driver != null){
+                driver.close();
+                driver.quit();
+            }
+
             available = true;
         }
 
     }
 
-    @PreDestroy
-    public void dispose(){
-        driver.close();
-        driver.quit();
-    }
 
     public synchronized boolean isAvailable(){
         return this.available;
