@@ -1,16 +1,14 @@
 package com.joebrooks.mapshotserver.domain.map.kakao.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
 import com.joebrooks.mapshotserver.domain.map.kakao.util.CustomChromeDriver;
-import com.joebrooks.mapshotserver.global.model.UriInfo;
+import com.joebrooks.mapshotserver.global.common.UriInfo;
+import com.joebrooks.mapshotserver.global.util.QueryGenerator;
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,7 +18,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ChromeDriverService {
+
     private boolean available = true;
+    private final QueryGenerator queryGenerator;
 
     public Optional<byte[]> getImage(KakaoMap kakaoMapInfo) {
         CustomChromeDriver driver = null;
@@ -32,11 +32,7 @@ public class ChromeDriverService {
                     .scheme(UriInfo.scheme.toString())
                     .host(UriInfo.host.toString())
                     .path(UriInfo.kakaoMapCrawler.toString())
-                    .queryParam("lat", kakaoMapInfo.getLat())
-                    .queryParam("lng", kakaoMapInfo.getLng())
-                    .queryParam("level", kakaoMapInfo.getLevel())
-                    .queryParam("type", kakaoMapInfo.getType())
-                    .queryParam("layerMode", kakaoMapInfo.isLayerMode())
+                    .queryParams(queryGenerator.getMaps(kakaoMapInfo))
                     .build(true);
 
             driver = new CustomChromeDriver();
