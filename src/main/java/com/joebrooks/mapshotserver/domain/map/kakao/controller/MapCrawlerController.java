@@ -14,6 +14,6 @@ public class MapCrawlerController {
     public String getKakaoMap(@ModelAttribute KakaoMap kakaoMap, Model model){
         model.addAttribute("kakaoMapInfo", kakaoMap);
 
-        return "proxy/kakao";
+        return "map/kakao";
     }
 }
