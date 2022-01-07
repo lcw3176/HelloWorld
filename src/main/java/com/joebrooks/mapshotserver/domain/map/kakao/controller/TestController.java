@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(".well-known/acme-challenge/")
+@RequestMapping(".well-known/acme-challenge")
 public class TestController {
 
     @GetMapping
