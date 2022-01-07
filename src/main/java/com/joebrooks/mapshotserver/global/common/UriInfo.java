@@ -1,7 +1,7 @@
 package com.joebrooks.mapshotserver.global.common;
 
 public enum UriInfo {
-    scheme("http"),
+    scheme("https"),
     host("mapshot.kro.kr"),
     kakaoMapCrawler("/map/kakao/crawl");
 
