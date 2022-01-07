@@ -29,7 +29,7 @@ public class KakaoMapController {
         Optional<byte[]> srcFile = chromeDriverService.getImage(kakaoMapInfo);
 
         if(srcFile.isPresent()){
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile.get());
         }
 
         return ResponseEntity.badRequest().build();
