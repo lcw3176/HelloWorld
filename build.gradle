@@ -30,10 +30,7 @@ dependencies {
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
     // 셀레니움
-    implementation 'org.seleniumhq.selenium:selenium-api:4.1.0'
-    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.0'
-    implementation 'org.seleniumhq.selenium:selenium-support:4.1.0'
-    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.1'
 
 }
 
