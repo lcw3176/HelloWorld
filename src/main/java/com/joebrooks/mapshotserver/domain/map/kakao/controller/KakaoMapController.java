@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin("https://testservermapshot.netlify.app")
+@CrossOrigin("https://mapshot.netlify.app")
 @RestController
 @RequestMapping("/map/kakao")
 @RequiredArgsConstructor
