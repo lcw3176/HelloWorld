@@ -27,8 +27,6 @@ public class ChromeDriverService {
     public byte[] getImage(KakaoMap kakaoMapInfo) {
 
         try{
-            available = false;
-
             UriComponents uri = UriComponentsBuilder.newInstance()
                     .scheme(UriInfo.scheme.toString())
                     .host(UriInfo.host.toString())
@@ -44,22 +42,34 @@ public class ChromeDriverService {
         } catch (Exception e){
             return null;
         } finally {
-            if(driver != null){
-                driver.quit();
-            }
-
-            available = true;
+            onClose();
         }
     }
 
-    public void init() throws Exception {
+    private void init() throws Exception {
+        available = false;
         driver = new CustomChromeDriver();
         waiter = new WebDriverWait(driver, Duration.ofSeconds(timeOutSeconds));
     }
 
 
-    public synchronized boolean isAvailable() {
-        return this.available;
+    private void onClose(){
+        if(driver != null){
+            driver.close();
+        }
+
+        available = true;
+    }
+
+
+    public synchronized boolean isAvailable() throws Exception {
+        if(available){
+            init();
+            return true;
+        }
+
+        return false;
+
     }
 
 
