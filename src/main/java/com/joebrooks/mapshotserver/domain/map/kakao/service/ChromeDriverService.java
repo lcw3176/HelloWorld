@@ -56,6 +56,7 @@ public class ChromeDriverService {
     private void onClose(){
         if(driver != null){
             driver.close();
+            driver.quit();
         }
 
         available = true;
