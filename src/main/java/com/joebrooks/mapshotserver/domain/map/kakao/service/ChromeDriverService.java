@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class ChromeDriverService {
@@ -21,9 +19,10 @@ public class ChromeDriverService {
     private boolean available = true;
     private final QueryGenerator queryGenerator;
     private final long timeOutSeconds = 30;
+    private CustomChromeDriver driver = null;
+    private WebDriverWait waiter;
 
-    public Optional<byte[]> getImage(KakaoMap kakaoMapInfo) {
-        CustomChromeDriver driver = null;
+    public byte[] getImage(KakaoMap kakaoMapInfo) {
 
         try{
             available = false;
@@ -35,28 +34,29 @@ public class ChromeDriverService {
                     .queryParams(queryGenerator.getMaps(kakaoMapInfo))
                     .build(true);
 
-            driver = new CustomChromeDriver();
-            WebDriverWait waiter = new WebDriverWait(driver, timeOutSeconds);
             driver.get(uri.toString());
             waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
-            return Optional.ofNullable(driver.getFullScreenshot());
+            return driver.getFullScreenshot();
 
         } catch (Exception e){
-            return Optional.empty();
+            return null;
         } finally {
             if(driver != null){
-                driver.close();
                 driver.quit();
             }
 
             available = true;
         }
+    }
 
+    public void init() throws Exception {
+        driver = new CustomChromeDriver();
+        waiter = new WebDriverWait(driver, timeOutSeconds);
     }
 
 
-    public synchronized boolean isAvailable(){
+    public synchronized boolean isAvailable() {
         return this.available;
     }
 
