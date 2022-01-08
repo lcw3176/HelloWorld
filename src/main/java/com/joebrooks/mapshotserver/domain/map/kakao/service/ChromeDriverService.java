@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.Duration;
+
 @Service
 @RequiredArgsConstructor
 public class ChromeDriverService {
@@ -52,7 +54,7 @@ public class ChromeDriverService {
 
     public void init() throws Exception {
         driver = new CustomChromeDriver();
-        waiter = new WebDriverWait(driver, timeOutSeconds);
+        waiter = new WebDriverWait(driver, Duration.ofSeconds(timeOutSeconds));
     }
 
 
