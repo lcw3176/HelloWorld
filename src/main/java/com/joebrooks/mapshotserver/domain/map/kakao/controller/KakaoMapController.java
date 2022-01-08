@@ -7,8 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 
 @CrossOrigin("https://testservermapshot.netlify.app")
 @RestController
@@ -21,8 +19,6 @@ public class KakaoMapController {
     @GetMapping
     public ResponseEntity getRequestAvailable() throws Exception {
         if(chromeDriverService.isAvailable()){
-            chromeDriverService.init();
-
             return ResponseEntity.ok().body(true);
         }
 
