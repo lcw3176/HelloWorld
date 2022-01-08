@@ -19,17 +19,23 @@ public class KakaoMapController {
     private final ChromeDriverService chromeDriverService;
 
     @GetMapping
-    public ResponseEntity getRequestAvailable(){
-        return ResponseEntity.ok().body(chromeDriverService.isAvailable());
+    public ResponseEntity getRequestAvailable() throws Exception {
+        if(chromeDriverService.isAvailable()){
+            chromeDriverService.init();
+
+            return ResponseEntity.ok().body(true);
+        }
+
+        return ResponseEntity.ok().body(false);
     }
 
     @PostMapping
     public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
-        Optional<byte[]> srcFile = chromeDriverService.getImage(kakaoMapInfo);
+        byte[] srcFile = chromeDriverService.getImage(kakaoMapInfo);
 
-        if(srcFile.isPresent()){
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile.get());
+        if(srcFile != null){
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
         }
 
         return ResponseEntity.badRequest().build();
