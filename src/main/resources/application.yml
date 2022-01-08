@@ -4,12 +4,7 @@ server:
     encoding:
       charset: UTF-8
   port: ${port:8080}
-  ssl:
-    key-store: 경로
-    key-store-password: 비밀번호
-    key-alias: tomcat
-    key-store-type: PKCS12
-    enabled: true
+
 # thymeleaf
 spring:
   thymeleaf:
