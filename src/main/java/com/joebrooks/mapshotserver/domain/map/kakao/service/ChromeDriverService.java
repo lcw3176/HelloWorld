@@ -2,6 +2,7 @@ package com.joebrooks.mapshotserver.domain.map.kakao.service;
 
 import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
 import com.joebrooks.mapshotserver.domain.map.kakao.util.CustomChromeDriver;
+import com.joebrooks.mapshotserver.domain.map.kakao.util.CustomChromeDriverOptions;
 import com.joebrooks.mapshotserver.global.common.UriInfo;
 import com.joebrooks.mapshotserver.global.util.QueryGenerator;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +20,12 @@ import java.time.Duration;
 public class ChromeDriverService {
 
     private boolean available = true;
-    private final QueryGenerator queryGenerator;
-    private final long timeOutSeconds = 30;
+
     private CustomChromeDriver driver = null;
-    private WebDriverWait waiter;
+    private WebDriverWait waiter = null;
+
+    private final QueryGenerator queryGenerator;
+    private final CustomChromeDriverOptions option;
 
     public byte[] getImage(KakaoMap kakaoMapInfo) {
 
@@ -47,8 +50,10 @@ public class ChromeDriverService {
     }
 
     private void init() throws Exception {
+        long timeOutSeconds = 30;
+
         available = false;
-        driver = new CustomChromeDriver();
+        driver = new CustomChromeDriver(option.getOptions());
         waiter = new WebDriverWait(driver, Duration.ofSeconds(timeOutSeconds));
     }
 
@@ -58,6 +63,9 @@ public class ChromeDriverService {
             driver.close();
             driver.quit();
         }
+
+        driver = null;
+        waiter = null;
 
         available = true;
     }
