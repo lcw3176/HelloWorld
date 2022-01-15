@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Component
-public class AlwaysWakeUpServer {
+//@Component
+//public class AlwaysWakeUpServer {
 
 //    private final String myUrl = UriComponentsBuilder.newInstance()
 //            .scheme(UriInfo.scheme.toString())
@@ -19,4 +19,4 @@ public class AlwaysWakeUpServer {
 //        RestTemplate rt = new RestTemplate();
 //        rt.getForEntity(myUrl, String.class);
 //    }
-}
+//}
