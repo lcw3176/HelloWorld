@@ -12,12 +12,7 @@ import java.lang.reflect.Method;
 import java.util.Base64;
 import java.util.Map;
 
-
 public class CustomChromeDriver extends ChromeDriver {
-
-    public CustomChromeDriver() throws Exception {
-        this(new CustomChromeDriverOptions().getOptions());
-    }
 
     public CustomChromeDriver(ChromeOptions options) throws Exception {
         this(ChromeDriverService.createDefaultService(), options);
