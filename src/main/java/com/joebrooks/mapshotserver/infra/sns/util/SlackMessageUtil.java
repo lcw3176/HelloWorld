@@ -1,14 +1,17 @@
 package com.joebrooks.mapshotserver.infra.sns.util;
 
+import com.joebrooks.mapshotserver.global.dto.ErrorMessage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 @Component
-@Primary
 public class SlackMessageUtil {
 
     private JSONObject getHeader(String title){
@@ -52,6 +55,28 @@ public class SlackMessageUtil {
         json.put("blocks", arr);
 
         return json;
+    }
+
+    public String makeErrorMessage(ErrorMessage message) {
+        JSONObject headerJson = getHeader("Failed");
+        Map<String, Object> map = new HashMap<>();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+        map.put("시간", simpleDateFormat.format(new Date()));
+
+        JSONObject sectionOneJson = getSection(map);
+        map.clear();
+
+        map.put("원인", message.getName());
+        JSONObject sectionTwoJson = getSection(map);
+        map.clear();
+
+        map.put("에러", message.getMessage());
+        JSONObject sectionThreeJson = getSection(map);
+
+        return getBlock(headerJson, sectionOneJson, sectionTwoJson, sectionThreeJson).toJSONString();
     }
 
 //    @Override
