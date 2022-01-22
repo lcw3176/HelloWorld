@@ -27,19 +27,17 @@ public class SlackMessageUtil {
     }
 
     private JSONObject getSection(Map<String, Object> map){
-        JSONArray jArr = new JSONArray();
+
+        JSONObject textJson = new JSONObject();
 
         map.forEach((key, value) -> {
-            JSONObject json = new JSONObject();
-            json.put("type", "mrkdwn");
-            json.put("text", key + ": " + value);
-
-            jArr.add(json);
+            textJson.put("type", "mrkdwn");
+            textJson.put("text", key + ": " + value);
         });
 
         JSONObject json = new JSONObject();
-        json.put("fields", jArr);
         json.put("type", "section");
+        json.put("text", textJson);
 
         return json;
     }
@@ -58,7 +56,7 @@ public class SlackMessageUtil {
     }
 
     public String makeErrorMessage(ErrorMessage message) {
-        JSONObject headerJson = getHeader("Failed");
+        JSONObject headerJson = getHeader("Error");
         Map<String, Object> map = new HashMap<>();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
@@ -78,70 +76,4 @@ public class SlackMessageUtil {
 
         return getBlock(headerJson, sectionOneJson, sectionTwoJson, sectionThreeJson).toJSONString();
     }
-
-//    @Override
-//    public String makeSuccessMessage(UserInfo param) {
-//        JSONObject headerJson = getHeader("Success");
-//        Map<String, Object> map = new HashMap<>();
-//
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
-//        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-//
-//        map.put("사용 시간", simpleDateFormat.format(new Date()));
-//
-//        JSONObject sectionOneJson = getSection(map);
-//        map.clear();
-//
-//        map.put("사용 횟수", param.getUsingCount());
-//        map.put("사용한 기능", param.getUsedFunc());
-//
-//        JSONObject sectionTwoJson = getSection(map);
-//
-//        return getBlock(headerJson, sectionOneJson, sectionTwoJson).toJSONString();
-//    }
-//
-//    @Override
-//    public String makeErrorMessage(UserInfo param) {
-//        JSONObject headerJson = getHeader("Failed");
-//        Map<String, Object> map = new HashMap<>();
-//
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
-//        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
-//
-//        map.put("사용 시간", simpleDateFormat.format(new Date()));
-//
-//        JSONObject sectionOneJson = getSection(map);
-//        map.clear();
-//
-//        map.put("에러명", param.getCode());
-//        map.put("메세지", param.getMessage());
-//
-//        JSONObject sectionTwoJson = getSection(map);
-//        map.clear();
-//
-//        map.put("사용 횟수", param.getUsingCount());
-//        map.put("사용한 기능", param.getUsedFunc());
-//
-//        JSONObject sectionThreeJson = getSection(map);
-//
-//        return getBlock(headerJson, sectionOneJson, sectionTwoJson, sectionThreeJson).toJSONString();
-//    }
-
-//    @Override
-//    public String makeDailyMessage(DailyInfo param) {
-//        JSONObject headerJson = getHeader("Daily Report");
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("사용한 유저", userNumber);
-//
-//        JSONObject sectionOneJson = getSection(map);
-//
-//        map.clear();
-//        map.put("호출 성공 횟수", successCount);
-//        map.put("호출 실패 횟수", failedCount);
-//
-//
-//        JSONObject sectionTwoJson = getSection(map);
-//
-//        return getBlock(headerJson, sectionOneJson, sectionTwoJson).toJSONString();
-//    }
 }
