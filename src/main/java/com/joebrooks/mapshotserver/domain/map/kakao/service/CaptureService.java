@@ -1,8 +1,7 @@
 package com.joebrooks.mapshotserver.domain.map.kakao.service;
 
+import com.joebrooks.mapshotserver.domain.map.kakao.customClass.CustomChromeDriver;
 import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
-import com.joebrooks.mapshotserver.domain.map.kakao.util.CustomChromeDriver;
-import com.joebrooks.mapshotserver.domain.map.kakao.util.CustomChromeDriverOptions;
 import com.joebrooks.mapshotserver.global.common.UriInfo;
 import com.joebrooks.mapshotserver.global.util.QueryGenerator;
 import lombok.RequiredArgsConstructor;
@@ -13,19 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.Duration;
-
 @Service
 @RequiredArgsConstructor
-public class ChromeDriverService {
+public class CaptureService {
 
     private boolean available = true;
 
-    private CustomChromeDriver driver = null;
-    private WebDriverWait waiter = null;
-
+    private final CustomChromeDriver driver;
+    private final WebDriverWait waiter;
     private final QueryGenerator queryGenerator;
-    private final CustomChromeDriverOptions option;
 
     public byte[] getImage(KakaoMap kakaoMapInfo) {
 
@@ -45,40 +40,18 @@ public class ChromeDriverService {
         } catch (Exception e){
             return null;
         } finally {
-            onClose();
+            available = true;
         }
     }
 
-    private void init() throws Exception {
-        long timeOutSeconds = 30;
-
-        available = false;
-        driver = new CustomChromeDriver(option.getOptions());
-        waiter = new WebDriverWait(driver, Duration.ofSeconds(timeOutSeconds));
-    }
-
-
-    private void onClose(){
-        if(driver != null){
-            driver.close();
-            driver.quit();
-        }
-
-        driver = null;
-        waiter = null;
-
-        available = true;
-    }
-
-
-    public synchronized boolean isAvailable() throws Exception {
+    public synchronized boolean isAvailable() {
         if(available){
-            init();
+            available = false;
+
             return true;
         }
 
         return false;
-
     }
 
 
