@@ -42,7 +42,7 @@ Mapshot 서비스의 프록시 서버로 활용되고 있습니다. 현재 용�
         - SlackClient.class (IMessageClient 슬랙 구현체)
 
 ### Backend 클래스 다이어그램
-![class2](https://user-images.githubusercontent.com/59993347/150673191-60736f56-a764-4bf9-bbd2-614b342c1389.jpg)
+![class](https://user-images.githubusercontent.com/59993347/151492486-b8fb4a0b-5ab6-4b0f-af85-72adfe904c78.png)
 
 ### FrontEnd
 - index.html (웰컴 페이지)
