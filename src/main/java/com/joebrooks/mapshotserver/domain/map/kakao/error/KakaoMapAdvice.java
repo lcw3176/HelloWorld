@@ -5,6 +5,7 @@ import com.joebrooks.mapshotserver.infra.sns.IMessageClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.ClientAbortException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.WebDriverException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,13 +16,13 @@ public class KakaoMapAdvice {
 
     private final IMessageClient iMessageClient;
 
-    @ExceptionHandler(ClientAbortException.class)
-    public void clientAbortHandler(){
+    @ExceptionHandler({ClientAbortException.class, NoSuchSessionException.class})
+    public void clientDisconnectedHandler(){
         sendErrorMessage(KakaoMapError.ClientDisconnected);
     }
 
     @ExceptionHandler(WebDriverException.class)
-    public void webdriverHandler(){
+    public void serverTimeOutHandler(){
         sendErrorMessage(KakaoMapError.ServerTimeOut);
     }
 
