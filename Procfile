@@ -1,2 +1,2 @@
-web: java -Dserver.port=$PORT -jar build/libs/mapshotServer-0.0.1-SNAPSHOT.jar -Xms256m -Xmx512m
+web: java -Dserver.port=$PORT -jar build/libs/mapshotServer-0.0.1-SNAPSHOT.jar -Xms256m -Xmx256m
 
