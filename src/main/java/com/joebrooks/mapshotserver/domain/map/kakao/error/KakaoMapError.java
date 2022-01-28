@@ -1,7 +1,7 @@
 package com.joebrooks.mapshotserver.domain.map.kakao.error;
 
 public enum KakaoMapError {
-    ClientDisconnected(1000, "clientAbortException"),
+    ClientDisconnected(1000, "Client Disconnected before work's done"),
     ServerTimeOut(1001, "Heroku Server TimeOut: KakaoMap");
 
     private int code;
