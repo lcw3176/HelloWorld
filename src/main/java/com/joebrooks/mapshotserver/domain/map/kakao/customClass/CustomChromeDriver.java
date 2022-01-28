@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.domain.map.kakao.util;
+package com.joebrooks.mapshotserver.domain.map.kakao.customClass;
 
 import com.google.common.collect.ImmutableMap;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -35,7 +35,7 @@ public class CustomChromeDriver extends ChromeDriver {
                         "mobile: typeof window.orientation !== 'undefined'" +
                         "})");
         sendCommand("Emulation.setDeviceMetricsOverride", metrics);
-        Object result = sendCommand("Page.captureScreenshot", ImmutableMap.of("format", "jpeg", "fromSurface", true));
+        Object result = sendCommand("Page.captureScreenshot", ImmutableMap.of("format", "webp", "fromSurface", true));
         sendCommand("Emulation.clearDeviceMetricsOverride", ImmutableMap.of());
         String base64Encoded = (String)((Map<String, ?>)result).get("data");
 
