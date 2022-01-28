@@ -8,6 +8,7 @@ Mapshot 서비스의 프록시 서버로 활용되고 있습니다. 현재 용�
 |/map/kakao|GET||지도 생성이 가능한지 응답|
 ||POST|KakaoMap.class|지도 생성 후 이미지 바이트 리턴|
 |/map/kakao/crawl|GET|KakaoMap.class|옵션에 맞는 지도 이미지 리턴|
+
 ## 구현 상황
 ### BackEnd
 - domain
@@ -20,11 +21,13 @@ Mapshot 서비스의 프록시 서버로 활용되고 있습니다. 현재 용�
                 - KakaoMap.class (카카오 지도 관련 정보)
             - error
                 - KakaoMapAdvice.class (kakao 에러 관리)
+                - KakaoMapError.class (에러 코드, 메세지 관리)
             - service
-                - ChromeDrvierService.class (MapCrawlerController에서 이미지 가져오기)
-            - util
+                - CaptureService.class (MapCrawlerController에서 이미지 가져오기)
+            - customClass
                 - CustomChromeDriver.class (풀 스크린샷 관련 정의한 커스텀 클래스)
-                - CustomChromeDrvierOptions.class (서버 상황에 맞는 chromedriver 옵션 설정)
+            - config
+                - ChromeDrvierConfig.class (크롬 드라이버 관련 Bean 정의)
 - global
     - common
         - UriInfo.class (서버 uri들 정리)
@@ -49,13 +52,3 @@ Mapshot 서비스의 프록시 서버로 활용되고 있습니다. 현재 용�
 - map
     - kakao.html (옵션에 맞는 이미지 지도 동적 로딩)
 
-## 기록사항
-### 22.01.24
-#### class org.apache.catalina.connector.ClientAbortException
-같은 에러가 슬랙으로 2번 옴. 클라이언트 연결이 끊겼을 때 나타난다는데 일단은 카카오 지도 요청 후 다른 좌표로 <strong>다시 요청</strong>했거나 or 작동중 <strong>창을 닫았을 때</strong>로 추정 중.  
-
-### 22.01.25
-#### org.openqa.selenium.NoSuchSessionException
-아직 자세히 조사 안함, 아마 지도 만들던 도중 다른 요청 한걸로 추정
-#### org.openqa.selenium.WebDriverException
-버전 문제라는 말도 있긴 한데 아마 헤로쿠 30초 타임아웃에 걸린 것으로 생각됨.
