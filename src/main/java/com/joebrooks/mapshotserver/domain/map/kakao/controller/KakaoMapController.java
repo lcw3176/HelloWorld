@@ -1,7 +1,7 @@
 package com.joebrooks.mapshotserver.domain.map.kakao.controller;
 
 import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
-import com.joebrooks.mapshotserver.domain.map.kakao.service.ChromeDriverService;
+import com.joebrooks.mapshotserver.domain.map.kakao.service.CaptureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class KakaoMapController {
 
-    private final ChromeDriverService chromeDriverService;
+    private final CaptureService captureService;
 
     @GetMapping
-    public ResponseEntity getRequestAvailable() throws Exception {
+    public ResponseEntity getRequestAvailable() {
 
-        if(chromeDriverService.isAvailable()){
+        if(captureService.isAvailable()){
             return ResponseEntity.ok().body(true);
         }
 
@@ -27,9 +27,9 @@ public class KakaoMapController {
     }
 
     @PostMapping
-    public ResponseEntity requestMapImage(@RequestBody KakaoMap kakaoMapInfo) {
+    public ResponseEntity getFullSizeMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
-        byte[] srcFile = chromeDriverService.getImage(kakaoMapInfo);
+        byte[] srcFile = captureService.getImage(kakaoMapInfo);
 
         if(srcFile != null){
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
