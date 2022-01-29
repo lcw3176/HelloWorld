@@ -34,8 +34,17 @@ public class CaptureService {
 
             driver.get(uri.toString());
             waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
+            byte[] data = driver.getFullScreenshot();
 
-            return driver.getFullScreenshot();
+            driver.executeScript(
+                      "var docs = document.getElementById('map'); " +
+                            "var childCount = docs.childElementCount;" +
+                            "for(var i = 0; i < childCount; i++){" +
+                            "   docs.children[0].remove();" +
+                            "}"
+            );
+
+            return data;
 
         } catch (Exception e){
             return null;
