@@ -16,12 +16,12 @@ public class KakaoMapAdvice {
 
     private final IMessageClient iMessageClient;
 
-    @ExceptionHandler({ClientAbortException.class, NoSuchSessionException.class})
+    @ExceptionHandler(NoSuchSessionException.class)
     public void clientDisconnectedHandler(){
         sendErrorMessage(KakaoMapError.ClientDisconnected);
     }
 
-    @ExceptionHandler(WebDriverException.class)
+    @ExceptionHandler({ClientAbortException.class, WebDriverException.class})
     public void serverTimeOutHandler(){
         sendErrorMessage(KakaoMapError.ServerTimeOut);
     }
