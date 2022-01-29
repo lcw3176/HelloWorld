@@ -40,7 +40,7 @@ public class KakaoMapAdvice {
 
     private void sendErrorMessage(KakaoMapError error){
         ErrorMessage errorMessage = ErrorMessage.builder()
-                .name(Integer.toString(error.getCode()))
+                .name(error.name())
                 .message(error.getDescription())
                 .build();
 
