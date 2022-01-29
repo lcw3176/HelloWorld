@@ -27,7 +27,7 @@ public class KakaoMapController {
     }
 
     @PostMapping
-    public ResponseEntity getFullSizeMapImage(@RequestBody KakaoMap kakaoMapInfo) {
+    public ResponseEntity<byte[]> getFullSizeMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
         byte[] srcFile = captureService.getImage(kakaoMapInfo);
 
