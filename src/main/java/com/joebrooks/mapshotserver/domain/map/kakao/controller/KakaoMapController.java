@@ -29,7 +29,7 @@ public class KakaoMapController {
     @PostMapping
     public ResponseEntity<byte[]> getFullSizeMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
-        byte[] srcFile = captureService.getImage(kakaoMapInfo);
+        byte[] srcFile = captureService.getImage(kakaoMapInfo.getUrl());
 
         if(srcFile != null){
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
