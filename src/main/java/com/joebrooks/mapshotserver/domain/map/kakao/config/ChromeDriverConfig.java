@@ -27,7 +27,7 @@ public class ChromeDriverConfig {
         return options;
     }
 
-    @Bean
+    @Bean(destroyMethod = "quit")
     public CustomChromeDriver customChromeDriver() throws Exception {
         return new CustomChromeDriver(chromeOptions());
     }
