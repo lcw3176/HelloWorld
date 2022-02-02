@@ -35,7 +35,7 @@ public class CustomChromeDriver extends ChromeDriver {
                         "mobile: typeof window.orientation !== 'undefined'" +
                         "})");
         sendCommand("Emulation.setDeviceMetricsOverride", metrics);
-        Object result = sendCommand("Page.captureScreenshot", ImmutableMap.of("format", "jpeg", "fromSurface", true));
+        Object result = sendCommand("Page.captureScreenshot", ImmutableMap.of("format", "jpeg", "quality", 80,"fromSurface", true));
         sendCommand("Emulation.clearDeviceMetricsOverride", ImmutableMap.of());
         String base64Encoded = (String)((Map<String, ?>)result).get("data");
 
