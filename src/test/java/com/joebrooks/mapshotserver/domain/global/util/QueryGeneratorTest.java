@@ -1,13 +1,5 @@
 package com.joebrooks.mapshotserver.domain.global.util;
 
-import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
-import com.joebrooks.mapshotserver.global.common.UriInfo;
-import com.joebrooks.mapshotserver.global.util.QueryGenerator;
-import org.junit.Test;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
-
 
 public class QueryGeneratorTest {
 
