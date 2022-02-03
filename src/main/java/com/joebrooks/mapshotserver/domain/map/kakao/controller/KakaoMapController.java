@@ -3,6 +3,7 @@ package com.joebrooks.mapshotserver.domain.map.kakao.controller;
 import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
 import com.joebrooks.mapshotserver.domain.map.kakao.service.CaptureService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +28,17 @@ public class KakaoMapController {
     }
 
     @PostMapping
-    public ResponseEntity<byte[]> getFullSizeMapImage(@RequestBody KakaoMap kakaoMapInfo) {
+    public ResponseEntity<ByteArrayResource> getFullSizeMapImage(@RequestBody KakaoMap kakaoMapInfo) {
 
         byte[] srcFile = captureService.getImage(kakaoMapInfo.getUrl());
 
         if(srcFile != null){
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(srcFile);
+            ByteArrayResource byteArr = new ByteArrayResource(srcFile);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .contentLength(byteArr.contentLength())
+                    .body(byteArr);
         }
 
         return ResponseEntity.badRequest().build();
