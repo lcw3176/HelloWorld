@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Xmx300m -Xss512k -XX:CICompilerCount=2 -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+UseConcMarkSweepGC -jar build/libs/mapshotServer-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/mapshotServer-0.0.1-SNAPSHOT.jar
