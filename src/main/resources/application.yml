@@ -11,4 +11,7 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+logging:
+  level:
+    com.joebrooks.mapshotserver.domain.map.kakao: DEBUG
 
