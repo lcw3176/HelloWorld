@@ -1,1 +1,1 @@
-web: java -javaagent:/app/newrelic/newrelic.jar -Dserver.port=$PORT -Xmx300m -Xss512k -XX:CICompilerCount=2 -jar build/libs/mapshotServer-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -javaagent:target/newrelic-agent.jar -Xmx300m -Xss512k -XX:CICompilerCount=2 -jar build/libs/mapshotServer-0.0.1-SNAPSHOT.jar
