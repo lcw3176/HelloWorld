@@ -38,6 +38,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation 'org.apache.commons:commons-lang3:3.0'
 
+    // https://mvnrepository.com/artifact/com.newrelic.agent.java/newrelic-agent
+    implementation 'com.newrelic.agent.java:newrelic-agent:7.5.0'
+
 
 }
 
