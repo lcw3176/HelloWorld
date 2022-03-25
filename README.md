@@ -3,7 +3,7 @@
 Mapshot 서비스의 프록시 서버로 활용되고 있습니다. 현재 용도는 카카오 지도를 대신 받아오는 역할을 하고 있습니다.
 
 ## uri
-|uri|method|parmas|기능|
+|uri|method|params|기능|
 |---|---|--|------|
 |/map/kakao|GET||지도 생성이 가능한지 응답|
 ||POST|KakaoMap.class|지도 생성 후 이미지 바이트 리턴|
