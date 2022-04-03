@@ -1,11 +1,11 @@
-package com.joebrooks.mapshotserver.global.dto;
+package com.joebrooks.mapshotserver.global.exception;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class ErrorMessage {
+public class ExceptionMessage {
     private String name;
     private String message;
 }

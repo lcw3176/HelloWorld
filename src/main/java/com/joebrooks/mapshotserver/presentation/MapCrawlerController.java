@@ -1,6 +1,6 @@
-package com.joebrooks.mapshotserver.domain.map.kakao.controller;
+package com.joebrooks.mapshotserver.presentation;
 
-import com.joebrooks.mapshotserver.domain.map.kakao.dto.KakaoMap;
+import com.joebrooks.mapshotserver.kakaoMap.KakaoMapRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ public class MapCrawlerController {
 
 
     @GetMapping
-    public String getKakaoMap(@ModelAttribute KakaoMap kakaoMap, Model model){
+    public String getKakaoMap(@ModelAttribute KakaoMapRequest kakaoMap, Model model){
         model.addAttribute("kakaoMapInfo", kakaoMap);
 
         return "map/kakao";

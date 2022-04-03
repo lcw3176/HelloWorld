@@ -1,4 +1,4 @@
-package com.joebrooks.mapshotserver.domain.heroku;
+package com.joebrooks.mapshotserver.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

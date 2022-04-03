@@ -1,9 +1,9 @@
-package com.joebrooks.mapshotserver.infra.sns.util;
+package com.joebrooks.mapshotserver.global.logging;
 
-import com.joebrooks.mapshotserver.global.dto.ErrorMessage;
+import com.joebrooks.mapshotserver.global.exception.ExceptionMessage;
+import lombok.experimental.UtilityClass;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-@Component
-public class SlackMessageUtil {
+@UtilityClass
+public class SlackMessageFormatter {
 
     private JSONObject getHeader(String title){
         JSONObject block = new JSONObject();
@@ -55,7 +55,7 @@ public class SlackMessageUtil {
         return json;
     }
 
-    public String makeErrorMessage(ErrorMessage message) {
+    public String makeErrorMessage(ExceptionMessage message) {
         JSONObject headerJson = getHeader("Error");
         Map<String, Object> map = new HashMap<>();
 
