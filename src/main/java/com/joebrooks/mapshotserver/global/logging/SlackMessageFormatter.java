@@ -1,6 +1,6 @@
 package com.joebrooks.mapshotserver.global.logging;
 
-import com.joebrooks.mapshotserver.global.exception.ExceptionMessage;
+import com.joebrooks.mapshotserver.global.exception.ExceptionResponse;
 import lombok.experimental.UtilityClass;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -55,7 +55,7 @@ public class SlackMessageFormatter {
         return json;
     }
 
-    public String makeErrorMessage(ExceptionMessage message) {
+    public String makeErrorMessage(ExceptionResponse message) {
         JSONObject headerJson = getHeader("Error");
         Map<String, Object> map = new HashMap<>();
 

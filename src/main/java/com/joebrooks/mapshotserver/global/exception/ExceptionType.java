@@ -1,12 +1,12 @@
 package com.joebrooks.mapshotserver.global.exception;
 
-public enum ErrorType {
+public enum ExceptionType {
     ClientDisconnected("Client Disconnected before work's done"),
     ServerTimeOut("Heroku Server TimeOut: KakaoMap");
 
     private String description;
 
-    private ErrorType(String description){
+    private ExceptionType(String description){
         this.description = description;
     }
 
