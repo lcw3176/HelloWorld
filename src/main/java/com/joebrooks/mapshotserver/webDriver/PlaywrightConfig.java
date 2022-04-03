@@ -13,8 +13,7 @@ public class PlaywrightConfig {
     public Page chromePage(){
         BrowserType chromium = Playwright.create().chromium();
 
-        return chromium.launch(new BrowserType.LaunchOptions()
-                .setChannel("chrome"))
+        return chromium.launch()
                 .newContext()
                 .newPage();
     }
