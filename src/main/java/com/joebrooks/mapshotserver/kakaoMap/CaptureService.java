@@ -1,9 +1,10 @@
 package com.joebrooks.mapshotserver.kakaoMap;
 
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.ScreenshotType;
-import com.microsoft.playwright.options.WaitForSelectorState;
+import com.joebrooks.mapshotserver.webDriver.CustomChromeDriver;
 import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,19 +12,16 @@ import org.springframework.stereotype.Service;
 public class CaptureService {
 
     private boolean available = true;
-    private final Page page;
+    private final CustomChromeDriver driver;
+    private final WebDriverWait waiter;
 
     public byte[] getImage(String url) {
 
         try{
-            page.navigate(url);
-            page.waitForSelector("#checker_true", new Page.WaitForSelectorOptions()
-                    .setState(WaitForSelectorState.ATTACHED));
+            driver.get(url);
+            waiter.until(ExpectedConditions.presenceOfElementLocated(By.id("checker_true")));
 
-            return page.screenshot(new Page.ScreenshotOptions()
-                    .setType(ScreenshotType.JPEG)
-                    .setFullPage(true)
-                    .setQuality(100));
+            return driver.getFullScreenshot();
 
         } catch (Exception e){
             return null;

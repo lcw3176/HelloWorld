@@ -32,9 +32,12 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
     implementation 'org.apache.commons:commons-lang3:3.0'
-    
-    // playwright 웹 드라이버
-    implementation "com.microsoft.playwright:playwright:1.17.0"
+
+    // 셀레니움
+    implementation 'org.seleniumhq.selenium:selenium-api:4.1.1'
+    implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.1'
+    implementation 'org.seleniumhq.selenium:selenium-support:4.1.1'
+    implementation 'org.seleniumhq.selenium:selenium-remote-driver:4.1.1'
 
 }
 
